@@ -13,6 +13,9 @@ module.exports = {
           accent: '#081225'
         },
       },
+      fontFamily: {
+        'primary': ['Josefin Sans', 'sans-serif']
+      },
     },
   },
   plugins: [],
