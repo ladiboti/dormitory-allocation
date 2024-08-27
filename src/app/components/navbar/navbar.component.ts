@@ -13,5 +13,4 @@ export class NavbarComponent {
     const today = new Date();
     this.todayDate = format(today, 'yyyy.MM.dd.');
   }
-
 }

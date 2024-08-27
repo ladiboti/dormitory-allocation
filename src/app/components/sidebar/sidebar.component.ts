@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Config } from '../../config';
 
 @Component({
@@ -10,20 +11,22 @@ export class SidebarComponent {
   logoPath: string = `${Config.PANNON_LOGO}`;
   username: string = 'Botikasz';
   activeButton: string | null = null;
+
   
   buttons = [
-    { label: 'Dokumentumok feltöltése', action: 'uploadDocuments'},
-    { label: 'Hallgatók szerkesztése', action: 'editStudents'},
-    { label: 'Kollégiumok szerkesztése', action: 'editDorms'},
-    { label: 'Felvételt nyert hallgatók', action: 'showAcceptedStudents'},
-    { label: 'Elutasított hallgatók', action: 'showRejectedStudents'},
-    { label: 'Várólista', action: 'showWaitingList'},
-    { label: 'Beállítások', action: 'showSettings'},
+    { label: 'Dokumentumok feltöltése', route: '/upload-documents'},
+    { label: 'Hallgatók szerkesztése', route: '/edit-students'},
+    { label: 'Kollégiumok szerkesztése', route: 'editDorms'},
+    { label: 'Felvételt nyert hallgatók', route: 'showAcceptedStudents'},
+    { label: 'Elutasított hallgatók', route: 'showRejectedStudents'},
+    { label: 'Várólista', route: 'showWaitingList'},
+    { label: 'Beállítások', route: 'showSettings'},
   ];
 
+  constructor(private router: Router) {}
 
-  onButtonClick(action: string) {
-    console.log('Button clicked: ${action}');
-    this.activeButton = action;
+  navigate(route: string) {
+    this.activeButton = route;
+    this.router.navigate([route])
   }
 }

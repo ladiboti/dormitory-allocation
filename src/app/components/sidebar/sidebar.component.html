@@ -7,10 +7,10 @@
     </div>
     <div class="flex flex-col items-start pt-8 w-full">
         <button *ngFor="let button of buttons"
-          (click)="onButtonClick(button.action)"
+          (click)="navigate(button.route)"
           [ngClass]="{
-            'bg-light-accent text-light-primary': activeButton === button.action,
-            'text-light-accent hover:bg-light-accent hover:text-light-primary': activeButton !== button.action
+            'bg-light-accent text-light-primary': activeButton === button.route,
+            'text-light-accent hover:bg-light-accent hover:text-light-primary': activeButton !== button.route
           }"
           class="mb-2 p-4 rounded-3xl w-full text-left transition-colors duration-200 ease-in-out"
         >
