@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EditStudentsComponent } from './components/edit-students/edit-students.component';
-import { UploadDocumentsComponent } from './components/upload-documents/upload-documents.component';
+import { UploaderCardComponent } from './components/upload-documents/uploader-card/uploader-card.component';
+import { DocumentUploaderComponent } from './components/upload-documents/document-uploader/document-uploader.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UploadDocumentsComponent } from './components/upload-documents/upload-d
     SidebarComponent,
     NavbarComponent,
     EditStudentsComponent,
-    UploadDocumentsComponent,
+    UploaderCardComponent,
+    DocumentUploaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@ import { Config } from '../../config';
 })
 export class SidebarComponent {
   logoPath: string = `${Config.PANNON_LOGO}`;
-  username: string = 'Botikasz';
+  username: string = 'Admin';
   activeButton: string | null = null;
 
   
