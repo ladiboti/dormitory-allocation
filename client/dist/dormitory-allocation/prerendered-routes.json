@@ -1,0 +1,6 @@
+{
+  "routes": [
+    "/edit-students",
+    "/upload-documents"
+  ]
+}
