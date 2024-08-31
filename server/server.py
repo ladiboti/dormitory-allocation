@@ -25,9 +25,9 @@ def upload_documents():
     for key in file_data:
         file = file_data[key]
         print(f"File field {key}:")
-        print(f"  Filename: {file.filename}")
-        print(f"  Content type: {file.content_type}")
-        print(f"  Size: {len(file.read())} bytes")
+        print(f"\tFilename: {file.filename}")
+        print(f"\tContent type: {file.content_type}")
+        print(f"\tSize: {len(file.read())} bytes")
 
     return jsonify({'message': 'Received data'})
 
