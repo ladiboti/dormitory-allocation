@@ -73,7 +73,7 @@ export class UploaderCardComponent {
   }
 
   uploadToServer(formData: FormData): Observable<any> {
-    const uploadUrl = 'localhost:5000/upload_documents'; 
+    const uploadUrl = 'http://localhost:5000/upload_documents'; 
     return this.http.post(uploadUrl, formData);
   }
 }
