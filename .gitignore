@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 
 /client/node_modules
+/server/old-scripts
