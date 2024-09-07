@@ -27,8 +27,7 @@ export class SidebarComponent {
   constructor(private router: Router, private toastr: ToastrService) {}
 
   navigate(route: string) {
-    //this.toastr.success('fasz', 'pina');
-    this.toastr.error('fasz', 'pina', {
+    this.toastr.error('test', 'test', {
       positionClass: 'toast-bottom-left',
       timeOut: 800,
     });

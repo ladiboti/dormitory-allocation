@@ -14,8 +14,7 @@ export class UploaderCardComponent {
   dragging: boolean = false;
   
   @Input() title?: string;
-  @Input() documentType?: string;  // Új @Input() változó a dokumentum típusának tárolására
-
+  @Input() documentType?: string;  
   constructor(private sNotify: ToastrService, private http: HttpClient) {}
 
   onDrop(event: DragEvent) {
