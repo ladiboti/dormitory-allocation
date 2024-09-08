@@ -1,13 +1,14 @@
 from flask import Blueprint, jsonify
-from pymongo import MongoClient
 
 students_blueprint = Blueprint('students', __name__)
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client.dormitory
-collection = db.students
+@students_blueprint.record_once
+def setup(state):
+    global db
+    db = state.options['db']
 
 @students_blueprint.route('/students', methods=['GET'])
 def get_students():
-    students = list(collection.find({}, {'_id': 0}))
+    collection = db.students
+    students = list(collection.find({}, {'_id': 0})) 
     return jsonify(students)

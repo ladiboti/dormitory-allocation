@@ -5,9 +5,11 @@ from pymongo import MongoClient
 
 documents_blueprint = Blueprint('documents', __name__)
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client.dormitory
-collection = db.students
+# for future usage
+@documents_blueprint.record_once
+def setup(state):
+    global db
+    db = state.options['db']
 
 received_documents = {}
 
