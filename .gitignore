@@ -44,3 +44,5 @@ Thumbs.db
 /client/node_modules
 /server/old-scripts
 /server/venv
+
+.env

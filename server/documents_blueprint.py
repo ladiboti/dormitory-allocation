@@ -15,6 +15,7 @@ def setup(state):
 received_documents = {}
 
 
+# untested
 @documents_blueprint.route('/upload_documents', methods=['POST'])
 def upload_documents():
     global received_documents
