@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { EditStudentsComponent } from './components/edit-students/edit-students.component';
 import { UploaderCardComponent } from './components/upload-documents/uploader-card/uploader-card.component';
 import { DocumentUploaderComponent } from './components/upload-documents/document-uploader/document-uploader.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { DocumentUploaderComponent } from './components/upload-documents/documen
     EditStudentsComponent,
     UploaderCardComponent,
     DocumentUploaderComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

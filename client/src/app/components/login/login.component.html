@@ -1,0 +1,16 @@
+<div class="flex items-center justify-center h-[85vh]">
+    <div class="flex flex-col border-2 bg-light-primary p-8 border-light-accent rounded-3xl w-[33vw] h-[33vh]">
+        <span class="text-2xl">
+            Bejelentkezés
+        </span>
+        <form (ngSubmit)="onSubmit()" class="space-y-5">
+            <input formControlName="username" placeholder="Felhasználónév" class="w-full p-4 bg-light-secondary border-2 border-light-accent rounded-2xl mt-4 placeholder-light-accent"/>
+            <input formControlName="password" placeholder="Jelszó" class="w-full p-4 bg-light-secondary border-2 border-light-accent rounded-2xl mt-4 placeholder-light-accent"/>
+            <div class="w-full flex justify-center mt-4">
+                <button type="submit" class="w-[33%] p-4 bg-light-accent text-white border-2 border-light-accent rounded-2xl">
+                    Bejelentkezés
+                </button>
+            </div>
+        </form>
+    </div>
+  </div>
