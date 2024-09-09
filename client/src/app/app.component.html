@@ -1,9 +1,15 @@
-<div class="flex justify-between bg-light-background p-4 h-screen font-primary">
-  <div class="pr-2 basis-[15%]">
-    <app-sidebar></app-sidebar>
+<ng-container *ngIf="isLoggedIn(); else loginPage">
+  <div class="flex justify-between bg-light-background p-4 h-screen font-primary">
+    <div class="pr-2 basis-[15%]">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="pl-2 basis-[85%]">
+      <app-navbar></app-navbar>
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="pl-2 basis-[85%]">
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
-  </div>
- </div>
+</ng-container>
+
+<ng-template #loginPage>
+  <app-login></app-login>
+</ng-template>
