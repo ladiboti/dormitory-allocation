@@ -5,6 +5,7 @@ from pymongo import MongoClient
 
 documents_blueprint = Blueprint('documents', __name__)
 
+
 # for future usage
 @documents_blueprint.record_once
 def setup(state):
@@ -12,6 +13,7 @@ def setup(state):
     db = state.options['db']
 
 received_documents = {}
+
 
 @documents_blueprint.route('/upload_documents', methods=['POST'])
 def upload_documents():
