@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Config } from '../../config';
 import { ToastrService } from 'ngx-toastr';
 import { GetUserService } from '../../services/get-user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,9 +23,15 @@ export class SidebarComponent {
     { label: 'Elutasított hallgatók', route: 'showRejectedStudents'},
     { label: 'Várólista', route: 'showWaitingList'},
     { label: 'Beállítások', route: 'showSettings'},
+    { label: 'Kijelentkezés', route: '/login'}
   ];
 
-  constructor(private router: Router, private toastr: ToastrService, private getUserService: GetUserService) {}
+  constructor(
+    private router: Router, 
+    private toastr: ToastrService, 
+    private getUserService: GetUserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.getUserService.getUsername().subscribe(
@@ -36,12 +43,17 @@ export class SidebarComponent {
     );
   }
 
+  logout() {
+    this.authService.logout();
+    window.location.reload();
+  }
+
   navigate(route: string) {
-    this.toastr.error('test', 'test', {
-      positionClass: 'toast-bottom-left',
-      timeOut: 800,
-    });
-    this.activeButton = route;
-    this.router.navigate([route]);
+    if (route === '/login') {
+      this.logout();  
+    } else {
+      this.activeButton = route;
+      this.router.navigate([route]);
+    }
   }
 }
