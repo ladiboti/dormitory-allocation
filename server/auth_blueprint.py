@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 auth_blueprint = Blueprint('auth', __name__)
 
@@ -32,8 +32,18 @@ def login():
 
     user = db.users.find_one({'username': username})
     if not user or not check_password_hash(user['password'], password):
-        return jsonify({'msg': 'Hibás felhasználónév vagy jelszó'}), 401
+        return jsonify({'msg': 'Incorrect login credidentials'}), 401
     
     access_token = create_access_token(identity={'username': username})
 
     return jsonify(access_token=access_token), 200
+
+@auth_blueprint.route('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    current_user = get_jwt_identity()
+    user = db.users.find_one({'username': current_user['username']})
+
+    response = {'username': user['username']} if user else {'message': 'User not found'}
+
+    return jsonify(response), 200 if user else 404

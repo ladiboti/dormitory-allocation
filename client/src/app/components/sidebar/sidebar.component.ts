@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Config } from '../../config';
 import { ToastrService } from 'ngx-toastr';
+import { GetUserService } from '../../services/get-user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,9 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SidebarComponent {
   logoPath: string = `${Config.PANNON_LOGO}`;
-  username: string = 'Admin';
+  username: string = '';
   activeButton: string | null = null;
-
   
   buttons = [
     { label: 'Dokumentumok feltöltése', route: '/upload-documents'},
@@ -24,7 +24,17 @@ export class SidebarComponent {
     { label: 'Beállítások', route: 'showSettings'},
   ];
 
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router, private toastr: ToastrService, private getUserService: GetUserService) {}
+
+  ngOnInit() {
+    this.getUserService.getUsername().subscribe(
+      user => this.username = user.username,
+      error => {
+        this.username = 'Missing username';
+        console.error('Failed to load user', error);
+      }
+    );
+  }
 
   navigate(route: string) {
     this.toastr.error('test', 'test', {
