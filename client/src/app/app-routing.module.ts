@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'upload-documents', component: DocumentUploaderComponent, canActivate: [AuthGuard] },
   { path: 'edit-students', component: EditStudentsComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'upload-documents', pathMatch: 'full' }
 ];
 
 @NgModule({

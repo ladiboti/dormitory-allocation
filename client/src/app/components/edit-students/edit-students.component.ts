@@ -8,7 +8,7 @@ import { error } from 'console';
   styleUrl: './edit-students.component.css'
 })
 export class EditStudentsComponent {
-  tableHeaders: string[] = ['Address', 'Admission Unit', 'Distance', 'Key', 'Neptun', 'Score', 'Semester'];
+  tableHeaders: string[] = ['Név', 'Neptun kód', 'Szak', 'Félév', 'Átlag', 'Távolság', ''];
   tableData: any[] = [];
 
   constructor(private getStudentsService: GetStudentsService) { }
