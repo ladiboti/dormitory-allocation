@@ -8,8 +8,16 @@ import { error } from 'console';
   styleUrl: './edit-students.component.css'
 })
 export class EditStudentsComponent {
-  tableHeaders: string[] = ['Név', 'Neptun kód', 'Szak', 'Félév', 'Átlag', 'Távolság', ''];
   tableData: any[] = [];
+  headerToKeyMapping: { [key: string]: string } = {
+    'Név': 'address',
+    'Neptun kód': 'neptun',
+    'Felvételi egység': 'admission_unit',
+    'Félév': 'semester',
+    'Átlag': 'score',
+    'Távolság': 'distance',
+    '': '' 
+  };
 
   constructor(private getStudentsService: GetStudentsService) { }
 
@@ -20,6 +28,7 @@ export class EditStudentsComponent {
   loadStudents(): void {
     this.getStudentsService.getStudents().subscribe(
       data => {
+        console.log('Raw data from service:', data);  
         this.tableData = this.filterTableData(data);
         console.log(this.tableData);
       },
@@ -28,28 +37,18 @@ export class EditStudentsComponent {
       }
     );
   }
+
   filterTableData(data: any[]): any[] {
     return data.map(student => {
       const filteredStudent: any = {};
-
-      const keyMapping: { [key: string]: string } = {
-        'Address': 'address',
-        'Admission Unit': 'admission_unit',
-        'Distance': 'distance',
-        'Key': 'key',
-        'Neptun': 'neptun',
-        'Score': 'score',
-        'Semester': 'semester'
-      };
-
-      this.tableHeaders.forEach(header => {
-        const key = keyMapping[header];
-        if (student.hasOwnProperty(key)) {
-          filteredStudent[key] = student[key];
-        }
-      })
+      for (const [header, key] of Object.entries(this.headerToKeyMapping)) {
+        filteredStudent[header] = student[key] || 'Missing data'; 
+      }
       return filteredStudent;
     });
   }
 
+  get tableHeaders(): string[] {
+    return Object.keys(this.headerToKeyMapping);
+  }
 }
