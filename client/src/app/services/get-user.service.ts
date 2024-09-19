@@ -12,6 +12,7 @@ export class GetUserService {
   constructor(private http: HttpClient) { }
 
   getUsername(): Observable<{ username: string }> {
+    // cookies inkabb
     const token = localStorage.getItem('access_token');
 
     const headers = new HttpHeaders({

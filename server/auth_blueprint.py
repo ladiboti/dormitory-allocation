@@ -38,6 +38,7 @@ def login():
 
     return jsonify(access_token=access_token), 200
 
+
 @auth_blueprint.route('/user', methods=['GET'])
 @jwt_required()
 def get_user():

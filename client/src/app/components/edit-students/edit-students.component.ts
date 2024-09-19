@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GetStudentsService } from '../../services/get-students.service';
-import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-students',
@@ -10,7 +10,7 @@ import { error } from 'console';
 export class EditStudentsComponent {
   tableData: any[] = [];
   headerToKeyMapping: { [key: string]: string } = {
-    'Név': 'address',
+    'Név': 'name',
     'Neptun kód': 'neptun',
     'Felvételi egység': 'admission_unit',
     'Félév': 'semester',
@@ -19,7 +19,10 @@ export class EditStudentsComponent {
     '': '' 
   };
 
-  constructor(private getStudentsService: GetStudentsService) { }
+  constructor(
+    private getStudentsService: GetStudentsService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.loadStudents();
@@ -33,7 +36,7 @@ export class EditStudentsComponent {
         console.log(this.tableData);
       },
       error => {
-        console.error('Error fetching students');
+        this.toastr.error('')
       }
     );
   }

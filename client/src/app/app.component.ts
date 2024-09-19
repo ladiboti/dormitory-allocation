@@ -12,6 +12,7 @@ export class AppComponent {
   constructor(private authService: AuthService) {}
 
   isLoggedIn(): boolean {
+    // authintercepter, stayrequest
     return this.authService.isLoggedIn();
   }
 }
