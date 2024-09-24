@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetStudentsService } from '../../services/get-students.service';
 import { ToastrService } from 'ngx-toastr';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-edit-students',
@@ -21,7 +22,8 @@ export class EditStudentsComponent {
 
   constructor(
     private getStudentsService: GetStudentsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -53,5 +55,9 @@ export class EditStudentsComponent {
 
   get tableHeaders(): string[] {
     return Object.keys(this.headerToKeyMapping);
+  }
+
+  openEditModal(student: any) {
+    this.modalService.openModal('editStudentModal', student);
   }
 }

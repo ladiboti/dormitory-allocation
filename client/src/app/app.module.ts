@@ -13,6 +13,8 @@ import { EditStudentsComponent } from './components/edit-students/edit-students.
 import { UploaderCardComponent } from './components/upload-documents/uploader-card/uploader-card.component';
 import { DocumentUploaderComponent } from './components/upload-documents/document-uploader/document-uploader.component';
 import { LoginComponent } from './components/login/login.component';
+import { ModalBaseComponent } from './components/modals/modal-base/modal-base.component';
+import { EditStudentModalComponent } from './components/modals/edit-student-modal/edit-student-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { LoginComponent } from './components/login/login.component';
     UploaderCardComponent,
     DocumentUploaderComponent,
     LoginComponent,
+    ModalBaseComponent,
+    EditStudentModalComponent
   ],
   imports: [
     BrowserModule,

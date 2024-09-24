@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-modal-base',
@@ -6,11 +7,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './modal-base.component.css'
 })
 export class ModalBaseComponent {
-  @Input() isVisible: boolean = false;
-  @Output() close = new EventEmitter<void>();
+  constructor(private modalService: ModalService) { }
 
   closeModal() {
-    console.log("megy")
-    this.close.emit(); 
+    this.modalService.closeModal(); 
+  }
+
+  get isVisible(): boolean {
+    return this.modalService.activeModal$ !== null; 
   }
 }

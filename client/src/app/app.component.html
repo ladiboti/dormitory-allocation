@@ -13,3 +13,7 @@
 <ng-template #loginPage>
   <app-login></app-login>
 </ng-template>
+
+<app-modal-base *ngIf="activeModal === 'editStudentModal'">
+  <app-edit-student-modal></app-edit-student-modal>
+</app-modal-base>
