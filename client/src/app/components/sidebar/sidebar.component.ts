@@ -18,7 +18,7 @@ export class SidebarComponent {
   buttons = [
     { label: 'Dokumentumok feltöltése', route: '/upload-documents'},
     { label: 'Hallgatók szerkesztése', route: '/edit-students'},
-    { label: 'Kollégiumok szerkesztése', route: 'editDorms'},
+    { label: 'Kollégiumok szerkesztése', route: '/edit-dormitories'},
     { label: 'Felvételt nyert hallgatók', route: 'showAcceptedStudents'},
     { label: 'Elutasított hallgatók', route: 'showRejectedStudents'},
     { label: 'Várólista', route: 'showWaitingList'},
@@ -49,11 +49,6 @@ export class SidebarComponent {
   }
 
   navigate(route: string) {
-    if (route === '/login') {
-      this.logout();  
-    } else {
-      this.activeButton = route;
-      this.router.navigate([route]);
-    }
+    route === '/login' ? this.logout() : (this.activeButton = route, this.router.navigate([route]));
   }
 }

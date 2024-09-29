@@ -16,6 +16,7 @@ import { DocumentUploaderComponent } from './components/upload-documents/documen
 import { LoginComponent } from './components/login/login.component';
 import { ModalBaseComponent } from './components/modals/modal-base/modal-base.component';
 import { EditStudentModalComponent } from './components/modals/edit-student-modal/edit-student-modal.component';
+import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dormitories.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EditStudentModalComponent } from './components/modals/edit-student-moda
     DocumentUploaderComponent,
     LoginComponent,
     ModalBaseComponent,
-    EditStudentModalComponent
+    EditStudentModalComponent,
+    EditDormitoriesComponent
   ],
   imports: [
     BrowserModule,

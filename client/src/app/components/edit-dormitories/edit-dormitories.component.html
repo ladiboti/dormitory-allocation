@@ -1,0 +1,10 @@
+<div class="border-2 bg-light-primary mt-4 mb-4 p-8 border-light-accent rounded-3xl h-[85vh] overflow-auto">
+    <div class="flex flex-wrap -mx-4">
+      <div *ngFor="let dormitory of dormitories" class="mb-6 px-4 w-1/2 transform transition-transform duration-200 ease-in-out hover:scale-105"> 
+        <div class="border-2 bg-light-secondary p-4 border-light-accent rounded-3xl w-full text-light-accent text-xl" (click)="openEditModal()">
+          <span class="block">{{ dormitory.name }}</span>
+          <span class="block">Férőhelyek száma: {{ dormitory.size }}</span>
+        </div>
+      </div>
+    </div>
+</div>
