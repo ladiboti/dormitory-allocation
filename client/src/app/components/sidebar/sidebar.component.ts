@@ -14,16 +14,21 @@ export class SidebarComponent {
   logoPath: string = `${Config.PANNON_LOGO}`;
   username: string = '';
   activeButton: string | null = null;
+  isAdmissionDropdownOpen: boolean = false;
   
   buttons = [
     { label: 'Dokumentumok feltöltése', route: '/upload-documents'},
     { label: 'Hallgatók szerkesztése', route: '/edit-students'},
     { label: 'Kollégiumok szerkesztése', route: '/edit-dormitories'},
-    { label: 'Felvételt nyert hallgatók', route: 'showAcceptedStudents'},
-    { label: 'Elutasított hallgatók', route: 'showRejectedStudents'},
-    { label: 'Várólista', route: 'showWaitingList'},
-    { label: 'Beállítások', route: 'showSettings'},
+    { label: 'Felvételi eljárás', route: '/admission-process'},
+    { label: 'Beállítások', route: ''},
     { label: 'Kijelentkezés', route: '/login'}
+  ];
+
+  dropdownButtons = [
+    { label: 'Felvételt nyert hallgatók', route: '/admission-success'},
+    { label: 'Várólista', route: '/admission-waitinglist'},
+    { label: 'Elutasított hallgatók', route: '/admission-rejected'},
   ];
 
   constructor(
@@ -49,6 +54,14 @@ export class SidebarComponent {
   }
 
   navigate(route: string) {
-    route === '/login' ? this.logout() : (this.activeButton = route, this.router.navigate([route]));
+    route === '/login' 
+      ? this.logout() 
+      : (this.isAdmissionDropdownOpen = route === '/admission-process' ? !this.isAdmissionDropdownOpen : false, this.activeButton = route, this.router.navigate([route]));
+  }
+
+  navigateDropdown(route: string) {
+    this.isAdmissionDropdownOpen = false; 
+    this.activeButton = route;
+    this.router.navigate([route]);
   }
 }

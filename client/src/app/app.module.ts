@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ModalBaseComponent } from './components/modals/modal-base/modal-base.component';
 import { EditStudentModalComponent } from './components/modals/edit-student-modal/edit-student-modal.component';
 import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dormitories.component';
+import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-modal/edit-dormitory-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +30,21 @@ import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dor
     LoginComponent,
     ModalBaseComponent,
     EditStudentModalComponent,
-    EditDormitoriesComponent
+    EditDormitoriesComponent,
+    EditDormitoryModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      preventDuplicates: true,
+      tapToDismiss: true,
+      autoDismiss: true,
+      //toastClass: 'font-primary'
+    }),
     ReactiveFormsModule,
     FormsModule
   ],

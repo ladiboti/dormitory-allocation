@@ -1,12 +1,13 @@
 <div class="flex flex-col items-center border-2 bg-light-secondary p-4 border-light-accent rounded-3xl h-full">
     <div class="flex flex-col justify-center items-center pt-1 pr-2 pb-3 border-b-2 border-light-accent basis-[10%]">
-        <img [src]="logoPath" class="w-[15%]" alt="Pannon Egyetem logó">
-        <span class="mt-2 text-base text-center text-light-accent">
-          Pannon Egyetem<br>Kollégiumi Igazgatóság
-        </span>
+      <img [src]="logoPath" class="w-[15%]" alt="Pannon Egyetem logó">
+      <span class="mt-2 text-base text-center text-light-accent">
+        Pannon Egyetem<br>Kollégiumi Igazgatóság
+      </span>
     </div>
     <div class="flex flex-col items-start pt-8 w-full">
-        <button *ngFor="let button of buttons"
+      <ng-container *ngFor="let button of buttons">
+        <button
           (click)="navigate(button.route)"
           [ngClass]="{
             'bg-light-accent text-light-primary': activeButton === button.route,
@@ -14,18 +15,33 @@
           }"
           class="mb-2 p-4 rounded-3xl w-full text-left transition-colors duration-200 ease-in-out"
         >
-            {{ button.label }}
+          {{ button.label }}
         </button>
+        <ng-container *ngIf="button.route === '/admission-process' && isAdmissionDropdownOpen">
+          <div *ngFor="let dropdownButton of dropdownButtons" class="ml-4">
+            <button
+              (click)="navigateDropdown(dropdownButton.route)"
+              [ngClass]="{
+                'bg-light-accent text-light-primary': activeButton === dropdownButton.route,
+                'text-light-accent hover:bg-light-accent hover:text-light-primary': activeButton !== dropdownButton.route
+              }"
+              class="mb-2 p-4 rounded-3xl w-full text-left transition-colors duration-200 ease-in-out"
+            >
+              {{ dropdownButton.label }}
+            </button>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
     <div class="flex flex-col items-center mt-auto pt-4 pb-8">
-        <div class="flex justify-center items-center bg-light-accent rounded-full w-28 h-28 font-bold text-2xl text-light-primary">
-            <!-- TODO: new font is not in the center of the circle -->
-            <span class="flex justify-center items-center w-full h-full text-5xl">
-                {{ username.charAt(0).toUpperCase() }}
-            </span>
-        </div>
-        <span class="mt-2 text-light-accent">
-            {{ username }}
+      <div class="flex justify-center items-center bg-light-accent rounded-full w-28 h-28 font-bold text-2xl text-light-primary">
+        <span class="flex justify-center items-center w-full h-full text-5xl">
+          {{ username.charAt(0).toUpperCase() }}
         </span>
+      </div>
+      <span class="mt-2 text-light-accent">
+        {{ username }}
+      </span>
     </div>
-</div>
+  </div>
+  

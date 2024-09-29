@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'upload-documents', component: DocumentUploaderComponent, canActivate: [AuthGuard] },
   { path: 'edit-students', component: EditStudentsComponent, canActivate: [AuthGuard] },
   { path: 'edit-dormitories', component: EditDormitoriesComponent, canActivate: [AuthGuard] },
+  { path: 'admission-process', component: DocumentUploaderComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'upload-documents', pathMatch: 'full' }
 ];
 
