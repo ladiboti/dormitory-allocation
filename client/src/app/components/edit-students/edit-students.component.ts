@@ -17,7 +17,6 @@ export class EditStudentsComponent {
     'Félév': 'semester',
     'Átlag': 'score',
     'Távolság': 'distance',
-    '': '' 
   };
 
   constructor(

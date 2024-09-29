@@ -4,6 +4,7 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +35,8 @@ import { EditStudentModalComponent } from './components/modals/edit-student-moda
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration(),
