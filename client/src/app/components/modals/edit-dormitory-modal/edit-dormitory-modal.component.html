@@ -1,0 +1,18 @@
+<div class="flex flex-col text-light-accent">
+    <div class="mb-4 text-2xl">
+        <span>{{ selectedDormitory.name }}</span>
+    </div>
+    <div class="mb-8 label-container">
+        <label class="mr-2 text-lg text-light-accent">Férőhelyek száma:</label>
+        <input 
+            type="number" 
+            [(ngModel)]="selectedDormitory.size" 
+            class="border-2 bg-light-secondary mt-0 p-4 border-light-accent rounded-2xl w-full"
+        />
+    </div>
+    <div class="flex justify-center">
+        <button class="bg-light-accent p-4 rounded-3xl w-2/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
+            <span>Mentés</span>
+        </button>
+    </div>
+</div>
