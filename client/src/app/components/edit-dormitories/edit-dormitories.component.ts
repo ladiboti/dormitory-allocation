@@ -19,8 +19,7 @@ export class EditDormitoriesComponent {
     private modalService: ModalService
   ) { }
 
-  // TODO: implement optional dormitory parameter in the future!!!
-  openEditModal() {
-    this.modalService.openModal('editDormitoryModal');
+  openEditModal(dormitory: any) {
+    this.modalService.openModal('editDormitoryModal', dormitory);
   }
 }

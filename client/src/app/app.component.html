@@ -19,5 +19,6 @@
 </app-modal-base>
 
 <app-modal-base *ngIf="activeModal === 'editDormitoryModal'">
-  <span>works</span>
+  <span>{{ selectedObject.name }}</span>
+  <span>{{ selectedObject.size }}</span>
 </app-modal-base>

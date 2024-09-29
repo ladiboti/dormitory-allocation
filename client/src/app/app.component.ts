@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, createNgModule } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { ModalService } from './services/modal.service';
 @Component({
@@ -9,7 +9,7 @@ import { ModalService } from './services/modal.service';
 export class AppComponent {
   title: string = 'dormitory-allocation';
   activeModal: string | null = null;
-  selectedStudent: any = null;
+  selectedObject: any = null;
 
   constructor(
     private authService: AuthService,
@@ -17,7 +17,10 @@ export class AppComponent {
   ) {
     this.modalService.activeModal$.subscribe(modal => {
       this.activeModal = modal;
-      this.selectedStudent = this.modalService.selectedStudent;
+    });
+
+    this.modalService.selectedObject$.subscribe(object => {
+      this.selectedObject = object; 
     });
   }
 

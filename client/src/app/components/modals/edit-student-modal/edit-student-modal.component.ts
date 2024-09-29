@@ -16,7 +16,7 @@ export class EditStudentModalComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.modalService.selectedStudent);
-    this.student = this.modalService.selectedStudent;
+    console.log(this.modalService.selectedObject$);
+    // this.student = this.modalService.selectedObject$;
   }
 }

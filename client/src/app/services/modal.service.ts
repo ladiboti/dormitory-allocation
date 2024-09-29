@@ -7,17 +7,17 @@ import { BehaviorSubject } from 'rxjs';
 export class ModalService {
   private activeModalSubject = new BehaviorSubject<string | null>(null);
   activeModal$ = this.activeModalSubject.asObservable();
-  selectedStudent : any = null;
 
-  openModal(modalType: string, student?: any) {
+  private selectedObjectSubject = new BehaviorSubject<any>(null);
+  selectedObject$ = this.selectedObjectSubject.asObservable();
+
+  openModal(modalType: string, paramObject?: any) {
     this.activeModalSubject.next(modalType);
-    if (student) {
-      this.selectedStudent = student;
-    }
+    this.selectedObjectSubject.next(paramObject || null); 
   }
 
   closeModal() {
     this.activeModalSubject.next(null);
-    this.selectedStudent = null;
+    this.selectedObjectSubject.next(null);
   }
 }
