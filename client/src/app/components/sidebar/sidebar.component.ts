@@ -26,9 +26,9 @@ export class SidebarComponent {
   ];
 
   dropdownButtons = [
-    { label: 'Felvételt nyert hallgatók', route: '/admission-success'},
-    { label: 'Várólista', route: '/admission-waitinglist'},
-    { label: 'Elutasított hallgatók', route: '/admission-rejected'},
+    { label: 'Felvételt nyert hallgatók', route: '/edit-students'},
+    { label: 'Várólista', route: '/edit-students'},
+    { label: 'Elutasított hallgatók', route: '/edit-students'},
   ];
 
   constructor(

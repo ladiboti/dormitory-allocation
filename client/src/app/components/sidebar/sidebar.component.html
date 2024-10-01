@@ -18,7 +18,7 @@
           {{ button.label }}
         </button>
         <ng-container *ngIf="button.route === '/admission-process' && isAdmissionDropdownOpen">
-          <div *ngFor="let dropdownButton of dropdownButtons" class="ml-4">
+          <div *ngFor="let dropdownButton of dropdownButtons" class="pl-4 w-full">
             <button
               (click)="navigateDropdown(dropdownButton.route)"
               [ngClass]="{
