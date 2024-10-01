@@ -18,6 +18,7 @@ import { ModalBaseComponent } from './components/modals/modal-base/modal-base.co
 import { EditStudentModalComponent } from './components/modals/edit-student-modal/edit-student-modal.component';
 import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dormitories.component';
 import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-modal/edit-dormitory-modal.component';
+import { AdmissionProcessComponent } from './components/admission-process/admission-process.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-
     ModalBaseComponent,
     EditStudentModalComponent,
     EditDormitoriesComponent,
-    EditDormitoryModalComponent
+    EditDormitoryModalComponent,
+    AdmissionProcessComponent
   ],
   imports: [
     BrowserModule,

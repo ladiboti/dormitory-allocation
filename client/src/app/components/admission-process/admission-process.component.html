@@ -1,0 +1,13 @@
+<div class="flex flex-col border-2 bg-light-primary mt-4 mb-4 p-8 border-light-accent rounded-3xl h-[85vh]">
+    <span class="mb-4 text-2xl text-light-accent">
+        Felvételi eljárás
+    </span>
+    <div *ngFor="let task of tasks" 
+        class="flex items-center border-2 bg-light-secondary mb-4 border-light-accent rounded-3xl w-full h-[8vh] transform transition-transform duration-200 ease-in-out hover:scale-y-110"
+        (click)="openEditModal(task.modalId)"
+    >
+        <span class="p-8 font-bold">
+          {{ task.name }}
+        </span>
+    </div>
+</div>

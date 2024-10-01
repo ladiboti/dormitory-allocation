@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { EditStudentsComponent } from './components/edit-students/edit-students.component';
 import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dormitories.component';
 import { DocumentUploaderComponent } from './components/upload-documents/document-uploader/document-uploader.component';
+import { AdmissionProcessComponent } from './components/admission-process/admission-process.component';
 import { LoginComponent } from './components/login/login.component';
 
 
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'upload-documents', component: DocumentUploaderComponent, canActivate: [AuthGuard] },
   { path: 'edit-students', component: EditStudentsComponent, canActivate: [AuthGuard] },
   { path: 'edit-dormitories', component: EditDormitoriesComponent, canActivate: [AuthGuard] },
-  { path: 'admission-process', component: DocumentUploaderComponent, canActivate: [AuthGuard] },
+  { path: 'admission-process', component: AdmissionProcessComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'upload-documents', pathMatch: 'full' }
 ];
 
