@@ -13,6 +13,8 @@ export class GetStudentsService {
 
   getStudents(): Observable<any[]> {
     const token = localStorage.getItem('token');
+
+    //doesnt work!!!
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : {};
     return this.http.get<any[]>(this.apiUrl, { headers });
   }

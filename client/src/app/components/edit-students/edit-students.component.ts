@@ -15,9 +15,8 @@ export class EditStudentsComponent {
     'Neptun kód': 'neptun',
     'Felvételi egység': 'admission_unit',
     'Félév': 'semester',
-    'Átlag': 'score',
-    'Távolság': 'distance',
-    'Kulcs': 'key'
+    'Kollégiumi átlag': 'score',
+    'Kulcs': 'key',
   };
 
   constructor(
@@ -59,5 +58,6 @@ export class EditStudentsComponent {
 
   openEditModal(student: any) {
     this.modalService.openModal('editStudentModal', student);
+    console.log("datatable:", student);
   }
 }
