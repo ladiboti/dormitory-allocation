@@ -9,14 +9,5 @@ import { Student } from '../../../interfaces/student';
 })
 
 export class EditStudentModalComponent {
-  student: Student | null = null;
-
-  constructor(
-    private modalService: ModalService
-  ) {}
-
-  ngOnInit() {
-    console.log(this.modalService.selectedObject$);
-    // this.student = this.modalService.selectedObject$;
-  }
+  @Input() selectedStudent: any;
 }

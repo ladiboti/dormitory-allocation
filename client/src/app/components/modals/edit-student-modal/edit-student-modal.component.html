@@ -1,43 +1,5 @@
 <div class="flex flex-col text-light-accent text-xl">
-    <div class="flex flex-col mb-4">
-        <label for="neptun">Neptun kód:</label>
-        <input type="text" name="neptun" [(ngModel)]="student!.neptun" [placeholder]="student!.neptun || 'Neptun kód'" class="p-2 border rounded" />
-    </div>
-      
-    <div class="flex flex-col mb-4">
-        <label for="distance">Távolság:</label>
-        <input type="number" name="distance" [(ngModel)]="student!.distance"  class="p-2 border rounded" />
-    </div>
-      
-    <div class="flex flex-col mb-4">
-        <label for="name">Név:</label>
-        <input type="text" name="name" [(ngModel)]="student!.name"  class="p-2 border rounded" />
-    </div>
-      
-    <div class="flex flex-col mb-4">
-        <label for="score">Átlag:</label>
-        <input type="number" step="0.01" name="score" [(ngModel)]="student!.score"  class="p-2 border rounded" />
-    </div>
-      
-    <div class="flex flex-col mb-4">
-        <label for="admissionUnit">Felvételi egység:</label>
-        <input type="text" name="admissionUnit" [(ngModel)]="student!.admission_unit"  class="p-2 border rounded" />
-    </div>
-    
-    <div class="flex flex-col mb-4">
-        <label for="semester">Félév:</label>
-        <input type="number" name="semester" [(ngModel)]="student!.semester"  class="p-2 border rounded" />
-    </div>
-    
-    <div class="flex flex-col mb-4">
-        <label for="address">Cím:</label>
-        <input type="text" name="address" [(ngModel)]="student!.address"  class="p-2 border rounded" />
-    </div>
-    
-    <div class="flex flex-col mb-4">
-        <label for="previouslyDenied">Korábban elutasítva:</label>
-        <input id="previouslyDenied" type="checkbox" [(ngModel)]="student!.previously_denied" name="previouslyDenied" />
+    <div class="mb-4 text-2xl">
+        <span>Név: {{ selectedStudent['Neptun kód'] || 'Missing data' }}</span>
     </div>
 </div>
-
-

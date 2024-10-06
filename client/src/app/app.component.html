@@ -15,7 +15,7 @@
 </ng-template>
 
 <app-modal-base *ngIf="activeModal === 'editStudentModal'">
-  <app-edit-student-modal></app-edit-student-modal>
+  <app-edit-student-modal [selectedStudent]="selectedObject"></app-edit-student-modal>
 </app-modal-base>
 
 <app-modal-base *ngIf="activeModal === 'editDormitoryModal'">

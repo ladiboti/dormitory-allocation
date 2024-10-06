@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -7,11 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class GetStudentsService {
 
-  private apiUrl = 'http://localhost:5000/students'
+  private apiUrl = 'http://localhost:5000/get_students'
 
   constructor(private http: HttpClient) { }
 
   getStudents(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    const token = localStorage.getItem('token');
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : {};
+    return this.http.get<any[]>(this.apiUrl, { headers });
   }
 }
