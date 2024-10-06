@@ -8,12 +8,12 @@ import { ModalService } from '../../services/modal.service';
 })
 export class AdmissionProcessComponent {
   tasks = [
-    { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunity' },
-    { name: 'Felvételi pontszámítás', modalId: 'admissionScoring' },
-    { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnits' },
-    { name: 'Egységenként felvehető hallgatók számának rögzítése', modalId: 'setUnitCapacities' },
-    { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnits' },
-    { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudents' },
+    { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunityModal' },
+    { name: 'Felvételi pontszámítás', modalId: 'admissionScoresModal' },
+    { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnitsModal' },
+    { name: 'Egységenként felvehető hallgatók számának rögzítése', modalId: 'setUnitCapacitiesModal' },
+    { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnitsModal' },
+    { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudentsModal' },
     { name: 'Felvételi eljárás lezárása', modalId: 'closeAdmissionProcess' }
   ];
 

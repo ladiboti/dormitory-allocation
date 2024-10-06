@@ -19,6 +19,7 @@ import { EditStudentModalComponent } from './components/modals/edit-student-moda
 import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dormitories.component';
 import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-modal/edit-dormitory-modal.component';
 import { AdmissionProcessComponent } from './components/admission-process/admission-process.component';
+import { CommunityAdmissionModalComponent } from './components/modals/admission-modals/community-admission-modal/community-admission-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AdmissionProcessComponent } from './components/admission-process/admiss
     EditStudentModalComponent,
     EditDormitoriesComponent,
     EditDormitoryModalComponent,
-    AdmissionProcessComponent
+    AdmissionProcessComponent,
+    CommunityAdmissionModalComponent
   ],
   imports: [
     BrowserModule,

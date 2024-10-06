@@ -1,14 +1,16 @@
 <div class="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-    <div class="border-2 bg-light-primary shadow-lg border-light-accent rounded-3xl w-full max-w-lg" role="dialog" aria-modal="true">
-      <div class="relative flex flex-col p-8">
-        <button class="top-4 right-8 absolute font-bold text-3xl text-light-accent transform transition-transform duration-200 ease-in-out hover:scale-110" 
-                aria-label="Bezárás"
-                (click)="closeModal()"
-        >
-          &times;
-        </button>
-        <ng-content></ng-content>
-      </div>
+  <div class="border-2 bg-light-primary shadow-lg border-light-accent rounded-3xl" 
+       [ngStyle]="{'width': width, 'height': height}" 
+       role="dialog" 
+       aria-modal="true">
+    <div class="relative flex flex-col p-8">
+      <button class="top-4 right-8 absolute font-bold text-3xl text-light-accent transform transition-transform duration-200 ease-in-out hover:scale-110" 
+              aria-label="Bezárás"
+              (click)="closeModal()"
+      >
+        &times;
+      </button>
+      <ng-content></ng-content>
     </div>
+  </div>
 </div>
-  

@@ -21,3 +21,7 @@
 <app-modal-base *ngIf="activeModal === 'editDormitoryModal'">
   <app-edit-dormitory-modal [selectedDormitory]="selectedObject"></app-edit-dormitory-modal>
 </app-modal-base>
+
+<app-modal-base *ngIf="activeModal === 'admissionByCommunityModal'">
+  <app-community-admission-modal></app-community-admission-modal>
+</app-modal-base>
