@@ -1,4 +1,4 @@
-<div class="flex flex-col bg-light-primary p-8 rounded-3xl w-full h-full border-2 border-light-accent">
+<div class="flex flex-col bg-light-primary p-4 rounded-3xl w-full h-full border-2 border-light-accent">
     <span class="text-2xl">
         {{ title }}
     </span>
@@ -9,12 +9,12 @@
         (dragleave)="onDragLeave($event)"
     >
         <ng-container *ngIf="!fileUploaded; else fileUploadedTemplate">
-            <span class="">
-                Húzd ide a PDF fájlt a feltöltéshez!
+            <span class="text-xl">
+                Húzd ide a Excel fájlt a feltöltéshez!
             </span>
         </ng-container>
         <ng-template #fileUploadedTemplate>
-            <span class="">
+            <span class="text-xl">
                 Fájl feltöltve: {{ file?.name }}
             </span>
         </ng-template>

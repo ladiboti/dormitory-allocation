@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,12 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private authService: AuthService,
+    private toastrService: ToastrService
+    ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -27,9 +33,11 @@ export class LoginComponent {
         (response) => {
           localStorage.setItem('access_token', response.access_token);
           this.router.navigate(['upload-documents']);
+          this.toastrService.success('Sikeres bejelentkezés!');
         },
         (error) => {
           console.error('Hibás bejelentkezés', error);
+          this.toastrService.error('Helyeten felhasználónév vagy jelszó!');
         }
       );
     }
