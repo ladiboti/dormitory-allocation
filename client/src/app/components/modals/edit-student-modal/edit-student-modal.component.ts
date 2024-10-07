@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalService } from '../../../services/modal.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
-import { error } from 'console';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-edit-student-modal',
@@ -14,13 +14,16 @@ import { error } from 'console';
 export class EditStudentModalComponent implements OnInit {
   @Input() selectedStudent: any;
   editStudentForm: FormGroup;
-  fields: Array<{ label: string; controlName: string; dbKey: string; type: string; isCheckbox?: boolean }> = [
-    { label: 'Neptun kód', controlName: 'Neptun kód', dbKey: 'neptun', type: 'text' },
-    { label: 'Kulcs', controlName: 'Kulcs', dbKey: 'key', type: 'text' },
-    { label: 'Felvételi egység', controlName: 'Felvételi egység', dbKey: 'admission_unit', type: 'text' },
-    { label: 'Félév', controlName: 'Félév', dbKey: 'semester', type: 'number' },
-    { label: 'Kollégiumi átlag', controlName: 'Kollégiumi átlag', dbKey: 'dormitory_average', type: 'number' },
+
+  fields: Array<{ controlName: string; dbKey: string; type: string; isCheckbox?: boolean }> = [
+    { controlName: 'Neptun kód', dbKey: 'neptun', type: 'text' },
+    { controlName: 'Kulcs', dbKey: 'key', type: 'text' },
+    { controlName: 'Felvételi egység', dbKey: 'admission_unit', type: 'text' },
+    { controlName: 'Félév', dbKey: 'semester', type: 'number' },
+    { controlName: 'Kollégiumi átlag', dbKey: 'score', type: 'number' },
   ];
+
+  dormitoryOrder: string[] = ['PE-HJ', 'PE-JE', 'PE-KP', 'PE-MA-2', 'PE-MA-22'];
 
   constructor(
     private fb: FormBuilder,
@@ -87,5 +90,10 @@ export class EditStudentModalComponent implements OnInit {
         )
       : this.toastrService.error('Hiba: Az access token nem található!')
       : this.toastrService.error('Kérem minden mezőt töltsön ki!');
-}
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.dormitoryOrder, event.previousIndex, event.currentIndex);
+  }
+  
 }
