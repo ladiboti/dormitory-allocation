@@ -3,6 +3,7 @@ import pandas as pd
 import io
 from pymongo import MongoClient
 import logging
+import os
 
 documents_blueprint = Blueprint('documents', __name__)
 
@@ -49,13 +50,30 @@ def upload_documents():
             df1 = pd.read_excel(file1)
             df2 = pd.read_excel(file2)
 
-            merged_df = pd.merge(df1, df2, on='Kulcs', suffixes=('', '_next'))
-            result = merged_df.to_dict(orient='records')
+            logging.info(f"Columns in first file: {df1.columns.tolist()}")
+            logging.info(f"Columns in second file: {df2.columns.tolist()}")
+
+            logging.info("Contents of the first file:")
+            logging.info(df1.head())  
+            logging.info("Contents of the second file:")
+            logging.info(df2.head())  
+
+
+            logging.info(f"NaN values in 'Kulcs' column of first file: {df1['Kulcs'].isna().sum()}")
+            logging.info(f"NaN values in 'Kulcs' column of second file: {df2['Kulcs'].isna().sum()}")
+
+            merged_df = pd.merge(df1, df2, on='Kulcs', how='inner', suffixes=('', '_next'))
+            logging.info(f"Merged DataFrame:\n{merged_df.head()}")
+
+            file_name = "merged_data.xlsx"
+            file_path = os.path.join(os.path.dirname(__file__), file_name)
+            merged_df.to_excel(file_path, index=False)
+
+            logging.info(f"Excel file saved at {file_path}")
 
             received_documents.clear()
 
-            # logging.info(f"Response: {result}")
-            return jsonify('message': 'successful upload'), 200 
+            return jsonify({'message': 'Files uploaded and Excel saved successfully.'}), 200
 
     logging.info("Waiting for all required documents")
     return jsonify({'message': 'Waiting for all required documents'}), 200
