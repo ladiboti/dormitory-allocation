@@ -25,7 +25,6 @@ def upload_documents():
 
     logging.info("Request received")
     
-    # Kiíratás a kérés fájljairól
     logging.info("Received files:")
     for file_key in request.files:
         logging.info(f"File: {file_key}")
@@ -40,36 +39,45 @@ def upload_documents():
         logging.info(f"File received for document type: {doc_type}")
         received_documents[doc_type] = request.files[doc_type].read()
 
-        required_documents = ['first_semester_applications', 'second_semester_applications']
+        required_documents = ['first_semester_applications', 'second_semester_applications', 'dormitory_orders']
 
         if all(doc in received_documents for doc in required_documents):
             logging.info("All required documents received")
             file1 = io.BytesIO(received_documents['first_semester_applications'])
             file2 = io.BytesIO(received_documents['second_semester_applications'])
+            file3 = io.BytesIO(received_documents['dormitory_orders'])
 
             df1 = pd.read_excel(file1)
             df2 = pd.read_excel(file2)
+            df3 = pd.read_excel(file3)
 
-            logging.info(f"Columns in first file: {df1.columns.tolist()}")
-            logging.info(f"Columns in second file: {df2.columns.tolist()}")
+            logging.info(f"\nColumns in first file: {df1.columns.tolist()}")
+            logging.info(f"\nColumns in second file: {df2.columns.tolist()}")
+            logging.info(f"\nColumns in third file: {df3.columns.tolist()}")
 
-            logging.info("Contents of the first file:")
+            logging.info("\nContents of the first file:")
             logging.info(df1.head())  
-            logging.info("Contents of the second file:")
+            logging.info("\nContents of the second file:")
             logging.info(df2.head())  
+            logging.info("\nContents of the third file:")
+            logging.info(df3.head())  
 
+            logging.info(f"\nNaN values in 'Kulcs' column of first file: {df1['Kulcs'].isna().sum()}")
+            logging.info(f"\nNaN values in 'Kulcs' column of second file: {df2['Kulcs'].isna().sum()}")
+            logging.info(f"\nNaN values in 'Neptun kód' column of third file: {df3['Neptun kód'].isna().sum()}")
 
-            logging.info(f"NaN values in 'Kulcs' column of first file: {df1['Kulcs'].isna().sum()}")
-            logging.info(f"NaN values in 'Kulcs' column of second file: {df2['Kulcs'].isna().sum()}")
-
-            merged_df = pd.merge(df1, df2, on='Kulcs', how='inner', suffixes=('', '_next'))
-            logging.info(f"Merged DataFrame:\n{merged_df.head()}")
+            merged_df = pd.merge(df1, df2, on='Kulcs', how='outer', suffixes=('', '_next'))
+            logging.info(f"\nMerged DataFrame:\n{merged_df.head()}")
+            
+            # kezeld le a _next adatokat is, de amugy jo
+            final_df = merged_df.set_index('Neptun kód').join(df3.set_index('Neptun kód'), how='left', rsuffix='_from_df3').reset_index()
+            logging.info(f"\nMerged DataFrame:\n{final_df.head()}")
 
             file_name = "merged_data.xlsx"
             file_path = os.path.join(os.path.dirname(__file__), file_name)
-            merged_df.to_excel(file_path, index=False)
+            final_df.to_excel(file_path, index=False)
 
-            logging.info(f"Excel file saved at {file_path}")
+            logging.info(f"\nExcel file saved at {file_path}")
 
             received_documents.clear()
 
