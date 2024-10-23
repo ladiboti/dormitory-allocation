@@ -3,3 +3,4 @@ from .documents_blueprint import documents_blueprint
 from .protected_blueprint import protected_blueprint
 from .students_blueprint import students_blueprint
 from .calculate_scores_blueprint import calculate_scores_blueprint
+from .create_application_groups_blueprint import create_application_groups_blueprint
