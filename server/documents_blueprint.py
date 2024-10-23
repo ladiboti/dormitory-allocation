@@ -6,8 +6,9 @@ import logging
 import os
 
 documents_blueprint = Blueprint('documents', __name__)
-
 logging.basicConfig(level=logging.INFO)
+received_documents = {}
+
 
 # for future usage
 @documents_blueprint.record_once
@@ -15,10 +16,29 @@ def setup(state):
     global db
     db = state.options['db']
 
-received_documents = {}
+
+def commit_dataframe_to_db(df, collection_name):
+    try:
+        logging.info(f"Committing DataFrame to the '{collection_name}' collection.")
+
+        records = df.to_dict(orient="records")
+
+        if not records:
+            logging.error("The provided DataFrame is empty, no data to commit")
+            return "The DataFrame is empty, no data to commit."
+        
+        collection = db[collection_name]
+        collection.insert_many(records)
+
+        logging.info(f"Successfully committed {len(records)} records to the '{collection_name}' collection.")
+        return f"Successfully committed {len(records)} records."
+    
+    except Exception as e:
+        logging.error(f"Error committing DataFrame to the database: {e}")
+        return f"Error committing DataFrame to the database: {e}"
 
 
-# untested
+
 @documents_blueprint.route('/upload_documents', methods=['POST'])
 def upload_documents():
     global received_documents
@@ -69,9 +89,12 @@ def upload_documents():
             merged_df = pd.merge(df1, df2, on='Kulcs', how='outer', suffixes=('', '_next'))
             logging.info(f"\nMerged DataFrame:\n{merged_df.head()}")
             
-            # kezeld le a _next adatokat is, de amugy jo
+            # kezeld majd le a _next adatokat is, de amugy jo
             final_df = merged_df.set_index('Neptun kód').join(df3.set_index('Neptun kód'), how='left', rsuffix='_from_df3').reset_index()
             logging.info(f"\nMerged DataFrame:\n{final_df.head()}")
+
+            db_commit_message = commit_dataframe_to_db(final_df, "dummy_applications_collection")
+            logging.info(f"Commit message: {db_commit_message}")
 
             file_name = "merged_data.xlsx"
             file_path = os.path.join(os.path.dirname(__file__), file_name)
