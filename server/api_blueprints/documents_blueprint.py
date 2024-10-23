@@ -27,6 +27,10 @@ def commit_dataframe_to_db(df, collection_name):
             return "The DataFrame is empty, no data to commit."
         
         collection = db[collection_name]
+
+        collection.delete_many({})
+        logging.info(f"Cleared all records from the '{collection_name}' collection.")
+
         collection.insert_many(records)
 
         logging.info(f"Successfully committed {len(records)} records to the '{collection_name}' collection.")
