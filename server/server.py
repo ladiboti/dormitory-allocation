@@ -7,10 +7,7 @@ import os
 
 load_dotenv()
 
-from documents_blueprint import documents_blueprint
-from students_blueprint import students_blueprint
-from auth_blueprint import auth_blueprint
-from protected_blueprint import protected_blueprint
+from api_blueprints import auth_blueprint, documents_blueprint, protected_blueprint, students_blueprint
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})

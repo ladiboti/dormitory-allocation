@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
-import pandas as pd
-import io
 from pymongo import MongoClient
+import pandas as pd
 import logging
+import io
 import os
 
 documents_blueprint = Blueprint('documents', __name__)
@@ -10,7 +10,6 @@ logging.basicConfig(level=logging.INFO)
 received_documents = {}
 
 
-# for future usage
 @documents_blueprint.record_once
 def setup(state):
     global db
@@ -95,10 +94,12 @@ def upload_documents():
         logging.info(f"Major codes commit message: {major_codes_db_commit_message}")
 
         # Save final DataFrame to Excel for testing purposes
+        """
         file_name = "merged_data.xlsx"
         file_path = os.path.join(os.path.dirname(__file__), file_name)
         final_df.to_excel(file_path, index=False)
         logging.info(f"\nExcel file saved at {file_path}")
+        """
 
         # Clear received documents after processing
         received_documents.clear()
