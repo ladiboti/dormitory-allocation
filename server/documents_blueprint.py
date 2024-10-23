@@ -44,67 +44,66 @@ def upload_documents():
     global received_documents
 
     logging.info("Request received")
+
+    def log_dataframe_info(df, name):
+        logging.info(f"\nColumns in {name}: {df.columns.tolist()}")
+        logging.info(f"\nContents of {name}:")
+        logging.info(df.head())
+        if 'Kulcs' in df.columns:
+            logging.info(f"\nNaN values in 'Kulcs' column of {name}: {df['Kulcs'].isna().sum()}")
+        if 'Neptun kód' in df.columns:
+            logging.info(f"\nNaN values in 'Neptun kód' column of {name}: {df['Neptun kód'].isna().sum()}")
+
+    # Handle file upload and logging
+    def process_document(doc_type):
+        if doc_type in request.files:
+            logging.info(f"File received for document type: {doc_type}")
+            received_documents[doc_type] = request.files[doc_type].read()
+
+    # Process required documents
+    required_documents = ['first_semester_applications', 'second_semester_applications', 
+                          'dormitory_orders', 'major_codes']
     
-    logging.info("Received files:")
-    for file_key in request.files:
-        logging.info(f"File: {file_key}")
+    for doc in required_documents:
+        process_document(doc)
 
-    doc_type = request.form.get('documentType')
-    logging.info(f"Document type: {doc_type}")
+    # Only proceed when all required documents are uploaded
+    if all(doc in received_documents for doc in required_documents):
+        logging.info("All required documents received")
 
-    if not doc_type:
-        return jsonify({'message': 'Document type is required'}), 400
+        # Read all DataFrames
+        dfs = {doc: pd.read_excel(io.BytesIO(received_documents[doc])) for doc in required_documents}
+        
+        # Log information for each DataFrame
+        for doc, df in dfs.items():
+            log_dataframe_info(df, doc)
 
-    if doc_type in request.files:
-        logging.info(f"File received for document type: {doc_type}")
-        received_documents[doc_type] = request.files[doc_type].read()
+        # Merge first and second semester applications
+        merged_df = pd.merge(dfs['first_semester_applications'], dfs['second_semester_applications'], 
+                             on='Kulcs', how='outer', suffixes=('', '_next'))
 
-        required_documents = ['first_semester_applications', 'second_semester_applications', 'dormitory_orders']
+        # Join dormitory orders data
+        final_df = merged_df.set_index('Neptun kód').join(dfs['dormitory_orders'].set_index('Neptun kód'), 
+                                                          how='left', rsuffix='_from_df3').reset_index()
 
-        if all(doc in received_documents for doc in required_documents):
-            logging.info("All required documents received")
-            file1 = io.BytesIO(received_documents['first_semester_applications'])
-            file2 = io.BytesIO(received_documents['second_semester_applications'])
-            file3 = io.BytesIO(received_documents['dormitory_orders'])
+        logging.info(f"\nMerged DataFrame:\n{final_df.head()}")
 
-            df1 = pd.read_excel(file1)
-            df2 = pd.read_excel(file2)
-            df3 = pd.read_excel(file3)
+        # Commit to the database
+        applications_db_commit_message = commit_dataframe_to_db(final_df, 'dummy_applications_collection')
+        major_codes_db_commit_message = commit_dataframe_to_db(dfs['major_codes'], 'dummy_major_codes_collection')
+        logging.info(f"Applications commit message: {applications_db_commit_message}")
+        logging.info(f"Major codes commit message: {major_codes_db_commit_message}")
 
-            logging.info(f"\nColumns in first file: {df1.columns.tolist()}")
-            logging.info(f"\nColumns in second file: {df2.columns.tolist()}")
-            logging.info(f"\nColumns in third file: {df3.columns.tolist()}")
+        # Save final DataFrame to Excel for testing purposes
+        file_name = "merged_data.xlsx"
+        file_path = os.path.join(os.path.dirname(__file__), file_name)
+        final_df.to_excel(file_path, index=False)
+        logging.info(f"\nExcel file saved at {file_path}")
 
-            logging.info("\nContents of the first file:")
-            logging.info(df1.head())  
-            logging.info("\nContents of the second file:")
-            logging.info(df2.head())  
-            logging.info("\nContents of the third file:")
-            logging.info(df3.head())  
+        # Clear received documents after processing
+        received_documents.clear()
 
-            logging.info(f"\nNaN values in 'Kulcs' column of first file: {df1['Kulcs'].isna().sum()}")
-            logging.info(f"\nNaN values in 'Kulcs' column of second file: {df2['Kulcs'].isna().sum()}")
-            logging.info(f"\nNaN values in 'Neptun kód' column of third file: {df3['Neptun kód'].isna().sum()}")
-
-            merged_df = pd.merge(df1, df2, on='Kulcs', how='outer', suffixes=('', '_next'))
-            logging.info(f"\nMerged DataFrame:\n{merged_df.head()}")
-            
-            # kezeld majd le a _next adatokat is, de amugy jo
-            final_df = merged_df.set_index('Neptun kód').join(df3.set_index('Neptun kód'), how='left', rsuffix='_from_df3').reset_index()
-            logging.info(f"\nMerged DataFrame:\n{final_df.head()}")
-
-            db_commit_message = commit_dataframe_to_db(final_df, "dummy_applications_collection")
-            logging.info(f"Commit message: {db_commit_message}")
-
-            file_name = "merged_data.xlsx"
-            file_path = os.path.join(os.path.dirname(__file__), file_name)
-            final_df.to_excel(file_path, index=False)
-
-            logging.info(f"\nExcel file saved at {file_path}")
-
-            received_documents.clear()
-
-            return jsonify({'message': 'Files uploaded and Excel saved successfully.'}), 200
+        return jsonify({'message': 'Files uploaded and Excel saved successfully.'}), 200
 
     logging.info("Waiting for all required documents")
     return jsonify({'message': 'Waiting for all required documents'}), 200
