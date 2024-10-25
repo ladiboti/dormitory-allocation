@@ -85,30 +85,35 @@ def upload_documents():
         merged_df = pd.merge(dfs['first_semester_applications'], dfs['second_semester_applications'], 
                              on='Kulcs', how='outer', suffixes=('', '_next'))
 
-        # Join dormitory orders data
-        final_df = merged_df.set_index('Neptun kód').join(dfs['dormitory_orders'].set_index('Neptun kód'), 
-                                                          how='left', rsuffix='_from_df3').reset_index()
+        # Sort dormitory orders by rank and create ordered list
+        # ChatGPT cooked today, I am proud of my good old friend <3
+        dormitory_orders_df = dfs['dormitory_orders'].copy()
+        dormitory_orders_df['Kollégium_rangsor'] = dormitory_orders_df.apply(
+        lambda row: [dorm for dorm, rank in sorted(
+                ((dorm, rank) for dorm, rank in row.dropna().items() if isinstance(rank, (int, float))), key=lambda x: x[1]
+            )], axis=1
+        )
 
-        logging.info(f"\nMerged DataFrame:\n{final_df.head()}")
+        # Remove the original columns with individual dormitory ranks and keep only the new list column
+        dormitory_orders_df = dormitory_orders_df[['Neptun kód', 'Kollégium_rangsor']]
+
+        # Join the sorted dormitory orders data with the merged applications DataFrame
+        final_df = merged_df.set_index('Neptun kód').join(dormitory_orders_df.set_index('Neptun kód'), 
+                                                          how='left').reset_index()
+
+        logging.info(f"\nMerged DataFrame with 'Kollégium_rangsor':\n{final_df[['Neptun kód', 'Kollégium_rangsor']].head()}")
 
         # Commit to the database
         applications_db_commit_message = commit_dataframe_to_db(final_df, 'dummy_applications_collection')
         major_codes_db_commit_message = commit_dataframe_to_db(dfs['major_codes'], 'dummy_major_codes_collection')
+        
         logging.info(f"Applications commit message: {applications_db_commit_message}")
         logging.info(f"Major codes commit message: {major_codes_db_commit_message}")
-
-        # Save final DataFrame to Excel for testing purposes
-        """
-        file_name = "merged_data.xlsx"
-        file_path = os.path.join(os.path.dirname(__file__), file_name)
-        final_df.to_excel(file_path, index=False)
-        logging.info(f"\nExcel file saved at {file_path}")
-        """
 
         # Clear received documents after processing
         received_documents.clear()
 
-        return jsonify({'message': 'Files uploaded and Excel saved successfully.'}), 200
+        return jsonify({'message': 'Files uploaded and processed successfully.'}), 200
 
     logging.info("Waiting for all required documents")
     return jsonify({'message': 'Waiting for all required documents'}), 200
