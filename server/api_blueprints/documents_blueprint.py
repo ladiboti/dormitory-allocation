@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import pandas as pd
 import logging
 import io
-import os
 
 documents_blueprint = Blueprint('documents', __name__)
 logging.basicConfig(level=logging.INFO)
@@ -89,7 +88,7 @@ def upload_documents():
         # ChatGPT cooked today, I am proud of my good old friend <3
         dormitory_orders_df = dfs['dormitory_orders'].copy()
         dormitory_orders_df['Kollégium_rangsor'] = dormitory_orders_df.apply(
-        lambda row: [dorm for dorm, rank in sorted(
+            lambda row: [dorm for dorm, rank in sorted(
                 ((dorm, rank) for dorm, rank in row.dropna().items() if isinstance(rank, (int, float))), key=lambda x: x[1]
             )], axis=1
         )

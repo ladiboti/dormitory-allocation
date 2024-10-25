@@ -26,6 +26,7 @@ app.register_blueprint(api.auth_blueprint, db=db)
 app.register_blueprint(api.protected_blueprint, db=db)
 app.register_blueprint(api.calculate_scores_blueprint, db=db)
 app.register_blueprint(api.create_application_groups_blueprint, db=db)
+app.register_blueprint(api.allocation_blueprint, db=db)
 
 if __name__ == '__main__':
     app.run(debug=True)
