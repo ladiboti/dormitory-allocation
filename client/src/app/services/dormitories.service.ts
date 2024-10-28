@@ -20,4 +20,10 @@ export class DormitoriesService {
       capacity: capacity
     });
   }
+
+  deleteDormitory(dormitoryName: string) {
+    return this.http.delete(`${this.apiUrl}/delete_dormitory`, {
+        body: { dormitory_name: dormitoryName }
+    });
+  }
 }
