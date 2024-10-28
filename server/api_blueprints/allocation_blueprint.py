@@ -28,6 +28,7 @@ def commit_dormitory_collection_to_db():
         dormitory_order = first_application["Kollégium_rangsor"]
 
         # Insert each dormitory as a separate document
+        # TODO: capacity hardcoded!!!!!!!!!
         dormitories = [
             {
                 "dormitory_name": dormitory,
@@ -46,6 +47,84 @@ def commit_dormitory_collection_to_db():
     else:
         logging.error("No valid dormitory rankings found in the applications.")
         return jsonify({'error': 'No valid dormitory rankings found in the database.'}), 500
+    
+
+@allocation_blueprint.route('/set_dormitories', methods=['POST'])
+def add_or_update_dormitory():
+    dormitories_collection = db["dummy_dormitories"]
+    applications_collection = db['dummy_applications_collection']
+
+    # Get the data from the request
+    dormitory_data = request.json
+
+    # Validate input
+    if not dormitory_data or 'dormitory_name' not in dormitory_data:
+        return jsonify({'error': 'Dormitory name is required.'}), 400
+
+    # Prepare the dormitory name
+    dormitory_name = dormitory_data["dormitory_name"]
+
+    # Check if the dormitory already exists
+    existing_dormitory = dormitories_collection.find_one({"dormitory_name": dormitory_name})
+
+    if existing_dormitory:
+        # Update existing dormitory capacity if provided
+        updated_capacity = dormitory_data.get("capacity")
+        if updated_capacity is not None:
+            dormitories_collection.update_one(
+                {"dormitory_name": dormitory_name},
+                {"$set": {"capacity": updated_capacity}}
+            )
+            return jsonify({'message': 'Dormitory capacity updated successfully.', 'dormitory': dormitory_name}), 200
+        else:
+            return jsonify({'error': 'Capacity must be provided to update an existing dormitory.'}), 400
+    else:
+        # Prepare the new dormitory document
+        new_dormitory = {
+            "dormitory_name": dormitory_name,
+            "applications": [],
+            "capacity": dormitory_data.get("capacity", 0)  # Default capacity is 0 if not specified
+        }
+
+        # Insert the new dormitory into the collection
+        dormitories_collection.insert_one(new_dormitory)
+        applications_collection.update_many({}, {'$addToSet': {'Kollégium_rangsor': dormitory_name}})
+
+        return jsonify({'message': 'Dormitory added successfully.'}), 201
+    
+
+@allocation_blueprint.route('/delete_dormitory', methods=['DELETE'])
+def delete_dormitory():
+    data = request.get_json()
+    dormitory_name = data.get('dormitory_name')
+
+    dormitories_collection = db["dummy_dormitories"]
+    applications_collection = db["dummy_applications_collection"]
+
+    if not dormitory_name:
+        return jsonify({'error': 'dormitory_name is required.'}), 400
+
+    result = dormitories_collection.delete_one({'dormitory_name': dormitory_name})
+
+    if result.deleted_count == 0:
+        return jsonify({'error': 'Dormitory not found.'}), 404
+    
+    applications_collection.update_many({}, {'$pull': {'Kollégium_rangsor': dormitory_name}})
+
+    return jsonify({'message': 'Dormitory deleted successfully.'}), 200
+
+
+@allocation_blueprint.route('/get_dormitories', methods=['GET'])
+def get_dormitories():
+    dormitories_collection = db["dummy_dormitories"]
+    
+    # Retrieve all dormitory documents
+    dormitories = list(dormitories_collection.find({}, {"_id": 0}))  # Exclude the MongoDB _id field from the output
+
+    if dormitories:
+        return jsonify(dormitories), 200
+    else:
+        return jsonify({'message': 'No dormitories found.'}), 404
 
 
 @allocation_blueprint.route('/allocation', methods=['POST'])
