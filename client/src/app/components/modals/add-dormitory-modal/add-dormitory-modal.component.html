@@ -1,0 +1,29 @@
+<div class="flex flex-col text-light-accent">
+    <div class="mb-4 text-2xl">
+        <span>Új kollégium hozzáadása</span>
+    </div>
+    <div class="mb-8 label-container">
+        <label class="mr-2 text-lg text-light-accent">Kollégium neve:</label>
+        <input 
+            type="text" 
+            [(ngModel)]="dormitoryData.name"
+            class="border-2 bg-light-secondary mt-2 mb-2 p-4 border-light-accent rounded-2xl w-full"
+            min="1"
+            required
+        />
+        <label class="mr-2 text-lg text-light-accent">Férőhelyek száma:</label>
+        <input 
+            type="number" 
+            [(ngModel)]="dormitoryData.capacity"
+            class="border-2 bg-light-secondary mt-2 mb-2 p-4 border-light-accent rounded-2xl w-full"
+            min="1"
+            required
+        />
+    </div>
+    <div class="flex justify-center">
+        <button (click)="addDormitory()"
+                class="bg-light-accent m-2 p-4 rounded-3xl w-2/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
+            <span>Mentés</span>
+        </button>
+    </div>
+</div>

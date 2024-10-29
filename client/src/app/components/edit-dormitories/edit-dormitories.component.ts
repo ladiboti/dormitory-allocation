@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
+import { DormitoriesService } from '../../services/dormitories.service';
 
 @Component({
   selector: 'app-edit-dormitories',
@@ -7,19 +8,36 @@ import { ModalService } from '../../services/modal.service';
   styleUrl: './edit-dormitories.component.css'
 })
 export class EditDormitoriesComponent {
-  dormitories = [
-    { name: 'PE-KOLI-1', size: '999' },
-    { name: 'PE-KOLI-2', size: '999' },
-    { name: 'PE-KOLI-3', size: '999' },
-    { name: 'PE-KOLI-4', size: '999' },
-    { name: 'PE-KOLI-5', size: '999' },
-  ];
+  dormitories: any = [];
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    private dormitoryService: DormitoriesService
   ) { }
+
+  ngOnInit() {
+    this.fetchDormitories(); 
+  }
+
+  fetchDormitories() {
+    this.dormitoryService.getDormitories().subscribe({
+      next: (data: any[]) => {
+        this.dormitories = data.map(doc => ({
+          name: doc.dormitory_name,
+          size: doc.capacity
+        }));
+      },
+      error: (error) => {
+        console.error('Error fetching dormitories', error);
+      }
+    });
+  }
 
   openEditModal(dormitory: any) {
     this.modalService.openModal('editDormitoryModal', dormitory);
+  }
+
+  openAddModal() {
+    this.modalService.openModal('addDormitoryModal');
   }
 }

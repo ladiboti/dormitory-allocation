@@ -21,6 +21,7 @@ import { EditDormitoriesComponent } from './components/edit-dormitories/edit-dor
 import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-modal/edit-dormitory-modal.component';
 import { AdmissionProcessComponent } from './components/admission-process/admission-process.component';
 import { CommunityAdmissionModalComponent } from './components/modals/admission-modals/community-admission-modal/community-admission-modal.component';
+import { AddDormitoryModalComponent } from './components/modals/add-dormitory-modal/add-dormitory-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CommunityAdmissionModalComponent } from './components/modals/admission-
     EditDormitoriesComponent,
     EditDormitoryModalComponent,
     AdmissionProcessComponent,
-    CommunityAdmissionModalComponent
+    CommunityAdmissionModalComponent,
+    AddDormitoryModalComponent
   ],
   imports: [
     BrowserModule,

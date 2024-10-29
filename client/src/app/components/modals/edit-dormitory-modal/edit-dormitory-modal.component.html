@@ -8,11 +8,18 @@
             type="number" 
             [(ngModel)]="selectedDormitory.size" 
             class="border-2 bg-light-secondary mt-0 p-4 border-light-accent rounded-2xl w-full"
+            min="1"
+            required
         />
     </div>
     <div class="flex justify-center">
-        <button class="bg-light-accent p-4 rounded-3xl w-2/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
-            <span>Mentés</span>
+        <button (click)="updateDormitory()"
+                class="bg-light-accent m-2 p-4 rounded-3xl w-2/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
+            <span>Frissítés</span>
+        </button>
+        <button (click)="deleteDormitory()"
+                class="bg-light-accent m-2 p-4 rounded-3xl w-2/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
+            <span>Törlés</span>
         </button>
     </div>
 </div>

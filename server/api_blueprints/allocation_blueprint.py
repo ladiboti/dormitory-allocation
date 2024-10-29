@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
 import logging
 from pymongo import MongoClient
 from pprint import pformat
+from bson import json_util
 
 allocation_blueprint = Blueprint('allocation', __name__)
 logging.basicConfig(level=logging.INFO)
@@ -117,14 +118,13 @@ def delete_dormitory():
 @allocation_blueprint.route('/get_dormitories', methods=['GET'])
 def get_dormitories():
     dormitories_collection = db["dummy_dormitories"]
-    
-    # Retrieve all dormitory documents
-    dormitories = list(dormitories_collection.find({}, {"_id": 0}))  # Exclude the MongoDB _id field from the output
-
+    dormitories = list(dormitories_collection.find({}))
     if dormitories:
-        return jsonify(dormitories), 200
-    else:
-        return jsonify({'message': 'No dormitories found.'}), 404
+        return Response(
+            json_util.dumps(dormitories),
+            mimetype='application/json'
+        ), 200
+    return jsonify({'message': 'No dormitories found.'}), 404
 
 
 @allocation_blueprint.route('/allocation', methods=['POST'])

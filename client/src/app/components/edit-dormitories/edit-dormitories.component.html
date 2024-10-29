@@ -1,11 +1,19 @@
-<div class="border-2 bg-light-primary mt-4 mb-4 p-8 border-light-accent rounded-3xl h-[85vh] overflow-auto">
+<div class="border-2 bg-light-primary p-8 border-light-accent rounded-3xl h-[85vh] flex flex-col">
   <span class="block mb-8 text-3xl">Kollégiumok szerkesztése</span>
-  <div class="flex flex-wrap -mx-4">
-      <div *ngFor="let dormitory of dormitories" class="mb-6 px-4 w-1/2 transform transition-transform duration-200 ease-in-out hover:scale-105"> 
+  <div class="flex-grow">
+    <div class="flex flex-wrap -mx-4">
+      <div *ngFor="let dormitory of dormitories" class="mb-6 px-4 w-1/2 transform transition-transform duration-200 ease-in-out hover:scale-105">
         <div class="border-2 bg-light-secondary p-4 border-light-accent rounded-3xl w-full text-light-accent text-xl" (click)="openEditModal(dormitory)">
           <span class="block">{{ dormitory.name }}</span>
           <span class="block">Férőhelyek száma: {{ dormitory.size }}</span>
         </div>
       </div>
     </div>
+  </div>
+  <div class="mt-4 flex justify-center">
+    <button (click)="openAddModal()"
+            class="bg-light-accent m-2 p-4 rounded-3xl w-1/3 text-light-primary text-xl transform transition-transform duration-200 ease-in-out hover:scale-110">
+      <span class="text-2xl">Új kollégium hozzáadása</span>
+    </button>
+  </div>
 </div>
