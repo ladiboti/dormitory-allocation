@@ -127,7 +127,7 @@ def get_dormitories():
     return jsonify({'message': 'No dormitories found.'}), 404
 
 
-@allocation_blueprint.route('/allocation', methods=['POST'])
+@allocation_blueprint.route('/allocation', methods=['GET'])
 def dormitory_allocation():
     groups_collection = db["dummy_groups"]
     results_collection = db["dummy_allocated_dormitories"]

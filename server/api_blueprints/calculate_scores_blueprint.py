@@ -22,7 +22,7 @@ def calculate_application_score(application):
     )
 
 
-@calculate_scores_blueprint.route('/calculate_scores', methods=['POST'])
+@calculate_scores_blueprint.route('/calculate_scores', methods=['GET'])
 def calculate_scores():
     collection_name = 'dummy_applications_collection'
     try:

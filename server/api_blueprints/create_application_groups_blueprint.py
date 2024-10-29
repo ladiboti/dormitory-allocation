@@ -16,7 +16,7 @@ def setup(state):
     global db
     db = state.options['db']
 
-@create_application_groups_blueprint.route('/create_groups', methods=['POST'])
+@create_application_groups_blueprint.route('/create_groups', methods=['GET'])
 def create_groups():
     collection = db['dummy_applications_collection'] 
     groups_collection = db['dummy_groups']  

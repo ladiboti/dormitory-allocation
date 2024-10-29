@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admission-process',
@@ -9,17 +10,32 @@ import { ModalService } from '../../services/modal.service';
 export class AdmissionProcessComponent {
   tasks = [
     { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunityModal' },
-    { name: 'Felvételi pontszámítás', modalId: 'admissionScoresModal' },
-    { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnitsModal' },
+    { name: 'Felvételi pontszámítás', modalId: 'admissionScoresModal', apiEndpoint: 'calculate_scores'},
+    { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnitsModal', apiEndpoint: 'create_groups' },
     { name: 'Egységenként felvehető hallgatók számának rögzítése', modalId: 'setUnitCapacitiesModal' },
-    { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnitsModal' },
-    { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudentsModal' },
+    { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnitsModal', apiEndpoint: 'allocation' },
+    { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudentsModal', apiEndpoint: 'allocation' },
     { name: 'Felvételi eljárás lezárása', modalId: 'closeAdmissionProcess' }
   ];
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    private http: HttpClient
   ) { }
+
+  handleTask(task: any) {
+    const baseUrl = 'http://localhost:5000'; // Define the base URL
+    const fullUrl = `${baseUrl}/${task.apiEndpoint}`; // Concatenate base URL with API endpoint
+  
+    this.http.get(fullUrl).subscribe(
+      response => {
+        console.log(`Response from ${fullUrl}:`, response);
+      },
+      error => {
+        console.error(`Error from ${fullUrl}:`, error);
+      }
+    );
+  }
 
   openEditModal(modalId: string) {
     this.modalService.openModal(modalId);

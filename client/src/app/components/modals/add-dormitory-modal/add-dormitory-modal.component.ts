@@ -17,6 +17,11 @@ export class AddDormitoryModalComponent {
   ) {}
 
   addDormitory() {
+    if (!this.dormitoryData.name || !this.dormitoryData.capacity) {
+      // toastr error
+      return;
+    }
+
     this.dormitoryService.updateDormitory(this.dormitoryData.name, this.dormitoryData.capacity).subscribe(
       response => {
         console.log('Sikeres kollegium hozzaadas', response);
