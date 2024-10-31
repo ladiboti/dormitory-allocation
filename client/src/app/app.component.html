@@ -29,3 +29,11 @@
 <app-modal-base *ngIf="activeModal === 'addDormitoryModal'">
   <app-add-dormitory-modal></app-add-dormitory-modal>
 </app-modal-base>
+
+<!-- admission process -->
+<app-modal-base *ngIf="activeModal === 'admissionScoresModal'">
+  <app-dynamic-table
+    [collectionName]="'dummy_applications_collection'"
+    [attributes]="['Neptun kód', 'Ösztöndíjindex', 'Ösztöndíjindex_next', 'Kollégiumi átlag']">
+  </app-dynamic-table>
+</app-modal-base>

@@ -1,0 +1,21 @@
+
+<div class="flex flex-col items-center pt-4 pb-4">
+    <div class="flex items-center border-2 border-light-accent rounded-3xl min-w-full min-h-full">
+        <table class="bg-light-secondary rounded-3xl min-w-full min-h-full">
+            <thead>
+                <tr>
+                    <th *ngFor="let attribute of attributes" class="p-2">
+                        {{ attribute }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data" class="transform transition-transform duration-200 ease-in-out hover:scale-y-110">
+                    <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center">
+                        <span>{{ item[attribute] }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

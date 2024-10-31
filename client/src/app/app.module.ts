@@ -22,6 +22,7 @@ import { EditDormitoryModalComponent } from './components/modals/edit-dormitory-
 import { AdmissionProcessComponent } from './components/admission-process/admission-process.component';
 import { CommunityAdmissionModalComponent } from './components/modals/admission-modals/community-admission-modal/community-admission-modal.component';
 import { AddDormitoryModalComponent } from './components/modals/add-dormitory-modal/add-dormitory-modal.component';
+import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AddDormitoryModalComponent } from './components/modals/add-dormitory-mo
     EditDormitoryModalComponent,
     AdmissionProcessComponent,
     CommunityAdmissionModalComponent,
-    AddDormitoryModalComponent
+    AddDormitoryModalComponent,
+    DynamicTableComponent
   ],
   imports: [
     BrowserModule,

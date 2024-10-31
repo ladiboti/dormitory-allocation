@@ -9,13 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdmissionProcessComponent {
   tasks = [
-    { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunityModal' },
+    { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunityModal', apiEndpoint: ''},
     { name: 'Felvételi pontszámítás', modalId: 'admissionScoresModal', apiEndpoint: 'calculate_scores'},
     { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnitsModal', apiEndpoint: 'create_groups' },
     { name: 'Egységenként felvehető hallgatók számának rögzítése', modalId: 'setUnitCapacitiesModal' },
     { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnitsModal', apiEndpoint: 'allocation' },
     { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudentsModal', apiEndpoint: 'allocation' },
-    { name: 'Felvételi eljárás lezárása', modalId: 'closeAdmissionProcess' }
+    { name: 'Felvételi eljárás lezárása', modalId: '' }
   ];
 
   constructor(
@@ -37,6 +37,7 @@ export class AdmissionProcessComponent {
     );
   }
 
+  // might need to be called from handleTask()
   openEditModal(modalId: string) {
     this.modalService.openModal(modalId);
     console.log(modalId);
