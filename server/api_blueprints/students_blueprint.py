@@ -19,10 +19,17 @@ def get_students():
 
 
 @students_blueprint.route('/db/<collection_name>', methods=['GET'])
-def get_collection_data(collection_name):
+def get_paginated_collection_data(collection_name):
     collection = db[collection_name]
-    documents = list(collection.find({}))  
+    
+    page = request.args.get('page', default=1, type=int)  
+    page_size = request.args.get('pageSize', default=5, type=int)  
 
+    skip = (page - 1) * page_size
+    documents = list(collection.find({}).skip(skip).limit(page_size))
+    
+    total_count = collection.count_documents({})
+    
     def remove_id_fields(obj):
         if isinstance(obj, dict):
             obj.pop('_id', None)  
@@ -35,8 +42,10 @@ def get_collection_data(collection_name):
     for document in documents:
         remove_id_fields(document)
 
-    return jsonify(documents), 200
-
+    return jsonify({
+        "data": documents,
+        "totalCount": total_count
+    }), 200
 
 
 @students_blueprint.route('/update_students/<key>', methods=['PUT'])

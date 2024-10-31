@@ -1,21 +1,39 @@
-
 <div class="flex flex-col items-center pt-4 pb-4">
+    <span class="mb-4 text-3xl text-light-accent self-start">{{ title }}</span>
     <div class="flex items-center border-2 border-light-accent rounded-3xl min-w-full min-h-full">
-        <table class="bg-light-secondary rounded-3xl min-w-full min-h-full">
-            <thead>
-                <tr>
-                    <th *ngFor="let attribute of attributes" class="p-2">
-                        {{ attribute }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of data" class="transform transition-transform duration-200 ease-in-out hover:scale-y-110">
-                    <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center">
-                        <span>{{ item[attribute] }}</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="bg-light-secondary rounded-3xl min-w-full min-h-full">
+        <thead>
+          <tr>
+            <th *ngFor="let attribute of attributes" class="p-2">
+              {{ attribute.header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data" class="transform transition-transform duration-200 ease-in-out hover:scale-y-110">
+            <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center">
+              <span>{{ item[attribute.key] }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</div>
+    <div *ngIf="data.length === 0">
+      <p>Nincs megjeleníthető adat.</p>
+    </div>
+    <div class="flex items-center space-x-4 mt-4">
+      <button
+        (click)="goToPreviousPage()"
+        [disabled]="currentPage === 1"
+        class="bg-light-accent p-2 rounded-2xl text-light-primary text-xl transition-transform duration-200 ease-in-out hover:scale-110">
+        Előző
+      </button>
+      <span> {{ currentPage }} / {{ totalPages }}</span>
+      <button
+        (click)="goToNextPage()"
+        [disabled]="currentPage === totalPages"
+        class="bg-light-accent p-2 rounded-2xl text-light-primary text-xl transition-transform duration-200 ease-in-out hover:scale-110">
+        Következő
+      </button>
+    </div>
+  </div>

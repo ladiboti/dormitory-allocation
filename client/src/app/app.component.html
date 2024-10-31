@@ -34,6 +34,14 @@
 <app-modal-base *ngIf="activeModal === 'admissionScoresModal'">
   <app-dynamic-table
     [collectionName]="'dummy_applications_collection'"
-    [attributes]="['Neptun kód', 'Ösztöndíjindex', 'Ösztöndíjindex_next', 'Kollégiumi átlag']">
+    [title]="'Felvételi pontszámítás'"
+    [pageSize]="10"
+    [attributes]="[
+    { key: 'Neptun kód', header: 'Neptun kód' },
+    { key: 'Szemeszter_next', header: 'Félév' },
+    { key: 'Ösztöndíjindex', header: 'Ösztöndíjindex első' },
+    { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második' },
+    { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag' } 
+  ]">
   </app-dynamic-table>
 </app-modal-base>
