@@ -35,7 +35,7 @@
   <app-dynamic-table
     [collectionName]="'dummy_applications_collection'"
     [title]="'Felvételi pontszámítás'"
-    [pageSize]="2"
+    [pageSize]="10"
     [attributes]="[
       { key: 'Neptun kód', header: 'Neptun kód' },
       { key: 'Szemeszter_next', header: 'Félév' },
@@ -43,6 +43,17 @@
       { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második' },
       { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag' } 
   ]">
-  <p>daily commit</p>
+  </app-dynamic-table>
+</app-modal-base>
+
+<app-modal-base *ngIf="activeModal === 'createAdmissionUnitsModal'">
+  <app-dynamic-table
+    [collectionName]="'dummy_groups'"
+    [title]="'Felvételi egységek létrehozása'"
+    [pageSize]="10"
+    [attributes]="[
+      { key: 'group', header: 'Felvételi egység' },
+      { key: 'student_count', header: 'Hallgatók száma' }
+  ]">
   </app-dynamic-table>
 </app-modal-base>

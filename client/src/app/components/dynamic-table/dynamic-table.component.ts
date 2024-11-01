@@ -31,7 +31,7 @@ export class DynamicTableComponent {
       searchTerm: this.searchTerm
     };
     
-    this.http.get(`http://localhost:5000/db/dummy_applications_collection`, { params }).subscribe(
+    this.http.get(`http://localhost:5000/db/${this.collectionName}`, { params }).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         this.data = response.data; 

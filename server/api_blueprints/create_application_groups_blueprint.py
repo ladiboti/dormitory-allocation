@@ -66,7 +66,8 @@ def create_groups():
     logger.info("Inserting groups into the database.")
     for key, value in grouped_applications.items():
         sorted_applications = sorted(value, key=lambda x: x["Kollégiumi átlag"], reverse=True)
-        group_document = {"group": key, "applications": sorted_applications}
+        student_count = len(sorted_applications)
+        group_document = {"group": key, "applications": sorted_applications, "student_count": student_count}
         result = groups_collection.insert_one(group_document)
         logger.debug(f"Inserted group document: {group_document}")
 
