@@ -15,6 +15,7 @@ export class DynamicTableComponent {
   data: any[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
+  searchTerm: string = '';
   
   constructor(private http: HttpClient) {}
   
@@ -25,19 +26,26 @@ export class DynamicTableComponent {
   fetchData(): void {
     const params = {
       page: this.currentPage,
-      pageSize: this.pageSize
+      pageSize: this.pageSize,
+      attributes: this.attributes.map(attr => attr.key),
+      searchTerm: this.searchTerm
     };
     
     this.http.get(`http://localhost:5000/db/dummy_applications_collection`, { params }).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        this.data = response.data;  // Most már a backend által lapozott adatok vannak itt
+        this.data = response.data; 
         this.totalPages = Math.ceil(response.totalCount / this.pageSize);
       },
       (error) => {
         console.error('Error fetching data', error);
       }
     );
+  }
+
+  onSearchTermChange(): void {
+    this.currentPage = 1; 
+    this.fetchData(); 
   }
   
   goToNextPage(): void {

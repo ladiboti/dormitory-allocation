@@ -35,13 +35,14 @@
   <app-dynamic-table
     [collectionName]="'dummy_applications_collection'"
     [title]="'Felvételi pontszámítás'"
-    [pageSize]="10"
+    [pageSize]="2"
     [attributes]="[
-    { key: 'Neptun kód', header: 'Neptun kód' },
-    { key: 'Szemeszter_next', header: 'Félév' },
-    { key: 'Ösztöndíjindex', header: 'Ösztöndíjindex első' },
-    { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második' },
-    { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag' } 
+      { key: 'Neptun kód', header: 'Neptun kód' },
+      { key: 'Szemeszter_next', header: 'Félév' },
+      { key: 'Ösztöndíjindex', header: 'Ösztöndíjindex első' },
+      { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második' },
+      { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag' } 
   ]">
+  <p>daily commit</p>
   </app-dynamic-table>
 </app-modal-base>
