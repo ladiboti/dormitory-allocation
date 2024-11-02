@@ -135,6 +135,7 @@ def dormitory_allocation():
 
     # Clear previous allocations in results
     results_collection.delete_many({})
+    groups_collection.update_many({}, {"$set": {"applications": [], "student_count": 0}})
 
     # Retrieve dormitory names and capacities from the dormitories collection
     dormitory_docs = list(dormitories_collection.find({}, {"dormitory_name": 1, "capacity": 1, "_id": 1}))

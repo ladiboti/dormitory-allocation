@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+import logging
 
 students_blueprint = Blueprint('students', __name__)
 
+logging.basicConfig(level=logging.INFO)
 
 @students_blueprint.record_once
 def setup(state):
@@ -84,6 +86,17 @@ def edit_collection_data(collection_name):
     if not filter_criteria or not updates:
         return jsonify({"error": "A szűrők és frissítések megadása kötelező"}), 400
 
+    # Ellenőrizzük, hogy milyen dokumentumok találhatók a szűrők alapján
+    found_documents = list(collection.find(filter_criteria))
+    
+    # Logoljuk az összes megtalált dokumentumot
+    if found_documents:
+        logging.info(f"Found Documents: {found_documents}")
+        logging.info(f"\nNumber of found documents: {len(found_documents)}")
+    else:
+        logging.info("No documents found matching the filter criteria.")
+
+    # Végrehajtjuk a frissítést
     update_result = collection.update_many(filter_criteria, {"$set": updates})
 
     return jsonify({
