@@ -34,7 +34,7 @@ def commit_dormitory_collection_to_db():
             {
                 "dormitory_name": dormitory,
                 "applications": [],
-                "capacity": 2  # Default capacity
+                "capacity": 100  # Default capacity
             }
             for dormitory in dormitory_order
         ]

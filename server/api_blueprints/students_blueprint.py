@@ -69,7 +69,26 @@ def get_paginated_collection_data(collection_name):
 
     return jsonify({
         "data": documents,
-        "totalCount": total_count
+        "totalCount": total_count,
+
+    }), 200
+
+
+@students_blueprint.route('/db/<collection_name>/edit', methods=['POST'])
+def edit_collection_data(collection_name):
+    collection = db[collection_name]
+    data = request.json
+    filter_criteria = data.get("filter")  
+    updates = data.get("updates")  
+
+    if not filter_criteria or not updates:
+        return jsonify({"error": "A szűrők és frissítések megadása kötelező"}), 400
+
+    update_result = collection.update_many(filter_criteria, {"$set": updates})
+
+    return jsonify({
+        "modified_count": update_result.modified_count,
+        "message": f"{update_result.modified_count} dokumentum módosítva."
     }), 200
 
 

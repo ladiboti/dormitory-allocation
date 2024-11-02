@@ -37,11 +37,11 @@
     [title]="'Felvételi pontszámítás'"
     [pageSize]="10"
     [attributes]="[
-      { key: 'Neptun kód', header: 'Neptun kód' },
-      { key: 'Szemeszter_next', header: 'Félév' },
-      { key: 'Ösztöndíjindex', header: 'Ösztöndíjindex első' },
-      { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második' },
-      { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag' } 
+      { key: 'Neptun kód', header: 'Neptun kód', editable: false },
+      { key: 'Szemeszter_next', header: 'Félév', editable: false },
+      { key: 'Ösztöndíjindex', header: 'Ösztöndíjindex első', editable: false },
+      { key: 'Ösztöndíjindex_next', header: 'Ösztöndíjindex második', editable: false },
+      { key: 'Kollégiumi átlag', header: 'Kollégiumi átlag', editable: true } 
   ]">
   </app-dynamic-table>
 </app-modal-base>
@@ -52,20 +52,20 @@
     [title]="'Felvételi egységek létrehozása'"
     [pageSize]="10"
     [attributes]="[
-      { key: 'group', header: 'Felvételi egység' },
-      { key: 'student_count', header: 'Hallgatók száma' }
+      { key: 'group', header: 'Felvételi egység', editable: false },
+      { key: 'student_count', header: 'Jelentkezett hallgatók száma', editable: false }
   ]">
   </app-dynamic-table>
 </app-modal-base>
 
-<app-modal-base *ngIf="activeModal === 'createAdmissionUnitsModal'">
+<app-modal-base *ngIf="activeModal === 'editAdmissionUnitsMaxIntake'">
   <app-dynamic-table
     [collectionName]="'dummy_groups'"
     [title]="'Egységenként felvehető hallgatók számának rögzítése'"
     [pageSize]="10"
     [attributes]="[
-      { key: 'group', header: 'Felvételi egység' },
-      { key: '', header: 'Felvehető hallgatók száma' }
+      { key: 'group', header: 'Felvételi egység', editable: false },
+      { key: 'max_intake', header: 'Felvehető hallgatók száma', editable: true }
   ]">
   </app-dynamic-table>
 </app-modal-base>

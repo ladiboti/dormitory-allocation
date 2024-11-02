@@ -63,13 +63,42 @@ def create_groups():
     grouped_applications = OrderedDict(sorted(grouped_applications.items(), key=lambda x: x[0]))
 
     # Csoportok beillesztése a gyűjteménybe
+    # TODO: max_intake hardocded!!!
     logger.info("Inserting groups into the database.")
     for key, value in grouped_applications.items():
         sorted_applications = sorted(value, key=lambda x: x["Kollégiumi átlag"], reverse=True)
         student_count = len(sorted_applications)
-        group_document = {"group": key, "applications": sorted_applications, "student_count": student_count}
+        group_document = {
+            "group": key, 
+            "applications": sorted_applications, 
+            "student_count": student_count,
+            "max_intake": 100    
+        }
         result = groups_collection.insert_one(group_document)
         logger.debug(f"Inserted group document: {group_document}")
 
     logger.info(f"Groups created successfully. Total groups created: {len(grouped_applications)}")
     return jsonify({"message": "Groups created successfully", "group_count": len(grouped_applications)}), 200
+
+
+@create_application_groups_blueprint.route('/update_max_intake', methods=['PUT'])
+def update_max_intake():
+    data = request.get_json()
+    group_key = data.get("group")  # expects ["GT-PT-BA2", 14] format
+    new_max_intake = data.get("max_intake")
+    
+    if not group_key or not isinstance(group_key, list) or len(group_key) != 2:
+        return jsonify({"error": "Invalid group key format. Expected a list with code and semester."}), 400
+    if not isinstance(new_max_intake, int):
+        return jsonify({"error": "Invalid max intake value. Expected an integer."}), 400
+
+    # Update the max_intake for the specific group
+    result = db['dummy_groups'].update_one(
+        {"group": group_key},
+        {"$set": {"max_intake": new_max_intake}}
+    )
+
+    if result.matched_count == 0:
+        return jsonify({"message": "Group not found"}), 404
+
+    return jsonify({"message": "Max intake updated successfully", "group": group_key, "new_max_intake": new_max_intake}), 200

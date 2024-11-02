@@ -21,7 +21,15 @@
         <tbody>
           <tr *ngFor="let item of data" class="transform transition-transform duration-200 ease-in-out hover:scale-y-110">
             <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center">
-              <span>{{ item[attribute.key] }}</span>
+              <ng-container *ngIf="attribute.editable; else displayOnly">
+                <input 
+                  [(ngModel)]="item[attribute.key]" 
+                  class="border-2 bg-light-primary p-1 rounded text-center" 
+                />
+              </ng-container>
+              <ng-template #displayOnly>
+                <span>{{ item[attribute.key] }}</span>
+              </ng-template>
             </td>
           </tr>
         </tbody>

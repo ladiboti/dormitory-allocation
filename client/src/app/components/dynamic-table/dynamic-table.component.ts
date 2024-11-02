@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
 export class DynamicTableComponent {
   @Input() collectionName!: string;
   @Input() title!: string;
-  @Input() attributes: { key: string, header: string }[] = [];
+  @Input() attributes: { key: string, header: string, editable: boolean }[] = [];
   @Input() pageSize!: number;
   
   data: any[] = [];
@@ -42,6 +42,8 @@ export class DynamicTableComponent {
       }
     );
   }
+
+  
 
   onSearchTermChange(): void {
     this.currentPage = 1; 
