@@ -57,3 +57,15 @@
   ]">
   </app-dynamic-table>
 </app-modal-base>
+
+<app-modal-base *ngIf="activeModal === 'createAdmissionUnitsModal'">
+  <app-dynamic-table
+    [collectionName]="'dummy_groups'"
+    [title]="'Egységenként felvehető hallgatók számának rögzítése'"
+    [pageSize]="10"
+    [attributes]="[
+      { key: 'group', header: 'Felvételi egység' },
+      { key: '', header: 'Felvehető hallgatók száma' }
+  ]">
+  </app-dynamic-table>
+</app-modal-base>

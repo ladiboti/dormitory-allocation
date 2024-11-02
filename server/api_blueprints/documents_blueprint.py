@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
+from .allocation_blueprint import commit_dormitory_collection_to_db
 import pandas as pd
 import logging
 import io
@@ -111,6 +112,8 @@ def upload_documents():
 
         # Clear received documents after processing
         received_documents.clear()
+
+        commit_dormitory_collection_to_db()
 
         return jsonify({'message': 'Files uploaded and processed successfully.'}), 200
 
