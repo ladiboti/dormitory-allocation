@@ -1,6 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file
 from flask_jwt_extended import jwt_required
 import logging
+from openpyxl import Workbook
+import os
 
 students_blueprint = Blueprint('students', __name__)
 
@@ -120,3 +122,29 @@ def update_student(key):
         return jsonify({'message': 'Student data updated successfully!'}), 200
     else:
         return jsonify({'message': 'Unable to find student!'}), 404
+    
+@students_blueprint.route('/export_dormitory_data', methods=['GET'])
+def export_dormitory_data():
+    dormitories_collection = db['dummy_dormitories']
+    
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Dormitory Data"
+    
+    sheet.append(["Név", "Neptun kód"])
+    
+    dormitories = dormitories_collection.find()
+    
+    for dormitory in dormitories:
+        dormitory_name = dormitory['dormitory_name']
+        applications = dormitory.get('applications', [])
+        
+        for application in applications:
+            neptun_code = application.get('Neptun kód')
+            if neptun_code: 
+                sheet.append([dormitory_name, neptun_code])
+    
+    output_file = "felvett_hallgatok.xlsx"
+    workbook.save(output_file)
+    
+    return send_file(output_file, as_attachment=True)
