@@ -13,14 +13,14 @@
     <table class="bg-light-secondary rounded-3xl min-w-full min-h-full">
       <thead>
         <tr>
-          <th *ngFor="let attribute of attributes" class="p-2">
+          <th *ngFor="let attribute of attributes" class="p-2 text-light-accent">
             {{ attribute.header }}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of data" class="transform transition-transform duration-200 ease-in-out hover:scale-y-110">
-          <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center">
+          <td *ngFor="let attribute of attributes" class="px-4 py-2 border-t-2 border-light-accent text-center text-light-accent">
             <ng-container *ngIf="attribute.editable; else displayOnly">
               <input 
                 [(ngModel)]="item[attribute.key]" 

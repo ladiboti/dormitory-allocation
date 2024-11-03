@@ -1,11 +1,11 @@
 <div class="flex justify-center items-center bg-light-secondary h-[100vh] font-primary">
     <div class="flex flex-col border-2 bg-light-primary p-8 border-light-accent rounded-3xl w-[33vw] h-[33vh]">
-        <span class="text-2xl">
+        <span class="text-2xl text-light-accent">
             Bejelentkezés
         </span>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
-            <input formControlName="username" placeholder="Felhasználónév" class="border-2 focus:border-[3px] focus:outline-none bg-light-secondary mt-4 p-4 border-light-accent focus:border-light-accent rounded-2xl w-full placeholder-light-accent"/>
-            <input formControlName="password" type="password" placeholder="Jelszó" class="border-2 focus:border-[3px] focus:outline-none bg-light-secondary mt-4 p-4 border-light-accent focus:border-light-accent rounded-2xl w-full placeholder-light-accent"/>
+            <input formControlName="username" placeholder="Felhasználónév" class="border-2 focus:border-[3px] focus:outline-none bg-light-secondary mt-4 p-4 border-light-accent focus:border-light-accent rounded-2xl w-full text-light-accent placeholder-light-accent"/>
+            <input formControlName="password" type="password" placeholder="Jelszó" class="border-2 focus:border-[3px] focus:outline-none bg-light-secondary mt-4 p-4 border-light-accent focus:border-light-accent rounded-2xl w-full text-light-accent placeholder-light-accent"/>
             <div class="flex justify-center mt-4 w-full">
                 <button type="submit" class="border-2 bg-light-accent p-4 border-light-accent rounded-2xl w-[66%] text-light-primary text-xl transition-transform duration-200 ease-in-out hover:scale-110">
                     <span>Bejelentkezés</span>
