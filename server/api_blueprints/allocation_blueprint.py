@@ -135,6 +135,7 @@ def dormitory_allocation():
 
     # Clear previous allocations in results
     results_collection.delete_many({})
+    dormitories_collection.update_many({}, {"$set": {"applications": [], "student_count": 0}})
     # groups_collection.update_many({}, {"$set": {"applications": [], "student_count": 0}})
 
     # Retrieve dormitory names and capacities from the dormitories collection
@@ -193,7 +194,7 @@ def dormitory_allocation():
                 if dormitory_doc and len(dormitory_doc["applications"]) < dormitory_doc["capacity"]:
                     dormitories_collection.update_one(
                         {"dormitory_name": dormitory_name},
-                        {"$push": {"applications": application}}
+                        {"$push": {"applications": application}, "$inc": {"student_count": 1}}  
                     )
 
                     # Save allocation to the results collection

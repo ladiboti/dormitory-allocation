@@ -66,31 +66,28 @@ export class DynamicTableComponent {
   editData(row: any, attributeKey: string) {
     const updatedField = { [attributeKey]: row[attributeKey] };
   
-    // Ha van aktív késleltetett művelet, töröljük azt
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }
   
-    // Új timeout beállítása 1 másodperces késleltetéssel
     this.debounceTimeout = setTimeout(() => {
-      // A filter a sor első attribútumának kulcsát használja
       const filter = { [this.attributes[0].key]: row[this.attributes[0].key] };
 
       const payload = {
-        filter: filter,  // A sor alapján
+        filter: filter,  
         updates: updatedField
       };
 
-      console.log('Payload before sending:', payload);  // Logolás a hibaelhárításhoz
+      console.log('Payload before sending:', payload);  
 
       this.http.post(`http://localhost:5000/db/${this.collectionName}/edit`, payload)
         .subscribe(
           response => {
             console.log('Sikeres frissítés:', response);
-            this.fetchData(); // Adatok frissítése a backend frissítés után
+            this.fetchData(); 
           },
           error => console.error('Hiba a frissítés során:', error)
         );
-    }, 1000); // 1 másodperces késleltetés
+    }, 1000); 
   }
 }

@@ -65,7 +65,20 @@
     [pageSize]="10"
     [attributes]="[
       { key: 'group', header: 'Felvételi egység', editable: false },
+      { key: 'student_count', header: 'Jelentkezett hallgatók száma', editable: false },
       { key: 'max_intake', header: 'Felvehető hallgatók száma', editable: true }
+  ]">
+  </app-dynamic-table>
+</app-modal-base>
+
+<app-modal-base *ngIf="activeModal === 'admitStudentsByUnitsModal'">
+  <app-dynamic-table
+    [collectionName]="'dummy_dormitories'"
+    [title]="'Kollégiumonként felvett hallgatók'"
+    [pageSize]="10"
+    [attributes]="[
+      { key: 'dormitory_name', header: 'Kollégium neve', editable: false },
+      { key: 'student_count', header: 'Felvett hallgatók száma', editable: false }
   ]">
   </app-dynamic-table>
 </app-modal-base>

@@ -11,10 +11,8 @@ export class AdmissionProcessComponent {
   tasks = [
     { name: 'Közösségi alapon való felvétel', modalId: 'admissionByCommunityModal', apiEndpoint: ''},
     { name: 'Felvételi pontszámítás', modalId: 'admissionScoresModal', apiEndpoint: 'calculate_scores'},
-    { name: 'Felvételi egységek létrehozása', modalId: 'createAdmissionUnitsModal', apiEndpoint: 'create_groups' },
-    { name: 'Egységenként felvehető hallgatók számának rögzítése', modalId: 'editAdmissionUnitsMaxIntake', apiEndpoint: '' },
-    { name: 'Hallgatók felvétele egységenként', modalId: 'admitStudentsByUnitsModal', apiEndpoint: 'allocation' },
-    { name: 'Hallgatók kollégiumok közötti kiosztása', modalId: 'allocateStudentsModal', apiEndpoint: 'allocation' },
+    { name: 'Felvételi egységek létrehozása', modalId: 'editAdmissionUnitsMaxIntake', apiEndpoint: 'create_groups' },
+    { name: 'Hallgatók felvétele', modalId: 'admitStudentsByUnitsModal', apiEndpoint: 'allocation' },
     { name: 'Felvételi eljárás lezárása', modalId: '' }
   ];
 
@@ -28,8 +26,8 @@ export class AdmissionProcessComponent {
       return;
     }
     
-    const baseUrl = 'http://localhost:5000'; // Define the base URL
-    const fullUrl = `${baseUrl}/${task.apiEndpoint}`; // Concatenate base URL with API endpoint
+    const baseUrl = 'http://localhost:5000'; 
+    const fullUrl = `${baseUrl}/${task.apiEndpoint}`; 
   
     this.http.get(fullUrl).subscribe(
       response => {
@@ -38,6 +36,7 @@ export class AdmissionProcessComponent {
       error => {
         console.error(`Error from ${fullUrl}:`, error);
       }
+      
     );
   }
 
