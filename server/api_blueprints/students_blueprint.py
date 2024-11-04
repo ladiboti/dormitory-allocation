@@ -148,3 +148,47 @@ def export_dormitory_data():
     workbook.save(output_file)
     
     return send_file(output_file, as_attachment=True)
+
+
+@students_blueprint.route('/export_waitlist_data', methods=['GET'])
+def export_waitlist_data():
+    # Adatbázis kollekció elérése
+    groups_collection = db['dummy_groups']
+    
+    # Excel munkafüzet létrehozása
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Waitlist Data"
+    
+    # Fejléc hozzáadása
+    sheet.append(["Neptun kód", "Várólista pontszám"])
+    
+    # Várólistás adatok gyűjtése
+    waitlist_data = []
+    groups = groups_collection.find()
+    
+    for group in groups:
+        applications = group.get('applications', [])
+        for application in applications:
+            waitlist_score = application.get('Várólista pontszám')
+            neptun_code = application.get('Neptun kód')
+            
+            if waitlist_score is not None and neptun_code:
+                waitlist_data.append({
+                    'neptun_code': neptun_code,
+                    'score': float(waitlist_score)  # Konvertálás float-ra a rendezéshez
+                })
+    
+    # Rendezés pontszám szerint csökkenő sorrendben
+    sorted_data = sorted(waitlist_data, key=lambda x: x['score'], reverse=True)
+    
+    # Rendezett adatok írása az Excel fájlba
+    for data in sorted_data:
+        sheet.append([data['neptun_code'], data['score']])
+    
+    # Excel fájl mentése
+    output_file = "varolistas_hallgatok.xlsx"
+    workbook.save(output_file)
+    
+    # Fájl küldése letöltésre
+    return send_file(output_file, as_attachment=True)
